@@ -37,7 +37,7 @@ Nodo *criar(char *palavra) {
  *
  * O nodo filho, [N], está à direita de seu pai, (p), que, por sua vez, está à direita do avô, (a), de [N].
  *
- * @param [in,out] raiz Raíz da árvore
+ * @param [in,out] raiz Raiz da árvore
  * @param [in,out] nodo Nodo filho na rotação
  */
 void rotacao_simples_esquerda(Nodo **raiz, Nodo **nodo) {
@@ -67,7 +67,7 @@ void rotacao_simples_esquerda(Nodo **raiz, Nodo **nodo) {
     COR_DE(PAI_DE(*nodo)) = NEGRO;
     COR_DE(ESQUERDA_DE(PAI_DE(*nodo))) = RUBRO;
 
-    /// 3. Atualiza raíz se necessário
+    /// 3. Atualiza raiz se necessário
     if (avo_era_raiz)
         *raiz = PAI_DE(*nodo);
 }
@@ -90,7 +90,7 @@ void rotacao_simples_esquerda(Nodo **raiz, Nodo **nodo) {
  *
  * O nodo filho, [N], está à esquerda de seu pai, (p), que, por sua vez, está à esquerda do avô, (a), de [N].
  *
- * @param [in,out] raiz Raíz da arvore
+ * @param [in,out] raiz Raiz da arvore
  * @param [in,out] nodo Nodo que é filho na rotação
  */
 void rotacao_simples_direita(Nodo **raiz, Nodo **nodo) {
@@ -120,7 +120,7 @@ void rotacao_simples_direita(Nodo **raiz, Nodo **nodo) {
     COR_DE(PAI_DE(*nodo)) = NEGRO;
     COR_DE(DIREITA_DE(PAI_DE(*nodo))) = RUBRO;
 
-    /// 3. Atualiza raíz se necessário
+    /// 3. Atualiza raiz se necessário
     if (avo_era_raiz)
         *raiz = PAI_DE(*nodo);
 }
@@ -147,7 +147,7 @@ void rotacao_simples_direita(Nodo **raiz, Nodo **nodo) {
  *
  * O nodo filho, (N), está à direita de seu pai, (p), que, por sua vez, está à esquerda do avô, (a), de (N).
  *
- * @param [in,out] raiz Raíz da árvore
+ * @param [in,out] raiz Raiz da árvore
  * @param [in,out] nodo Nodo que é filho na rotação
  */
 void rotacao_dupla_direrita(Nodo **raiz, Nodo **nodo) {
@@ -179,7 +179,7 @@ void rotacao_dupla_direrita(Nodo **raiz, Nodo **nodo) {
     COR_DE(*nodo) = NEGRO;
     COR_DE(avo) = RUBRO;
 
-    /// 3. Atualiza raíz se necessário
+    /// 3. Atualiza raiz se necessário
     if (avo_era_raiz)
         *raiz = PAI_DE(PAI_DE(*nodo));
 
@@ -206,7 +206,7 @@ void rotacao_dupla_direrita(Nodo **raiz, Nodo **nodo) {
  *
  * O nodo filho, (N), está à esquerda de seu pai, (p), que, por sua vez, está à direita de do avô, (a), de (N).
  *
- * @param [in,out] raiz Raíz da árvore
+ * @param [in,out] raiz Raiz da árvore
  * @param [in,out] nodo Nodo que é filho na rotação
  */
 void rotacao_dupla_esquerda(Nodo **raiz, Nodo **nodo) {
@@ -238,7 +238,7 @@ void rotacao_dupla_esquerda(Nodo **raiz, Nodo **nodo) {
     COR_DE(*nodo) = NEGRO;
     COR_DE(avo) = RUBRO;
 
-    /// 3. Atualiza raíz se necessário
+    /// 3. Atualiza raiz se necessário
     if (avo_era_raiz)
         *raiz = PAI_DE(PAI_DE(*nodo));
 }
@@ -259,7 +259,7 @@ void alterar_cores(Nodo **nodo) {
 
 /**
  * Realiza o balanceamento da árvore
- * @param [in,out] raiz Raíz da árvore
+ * @param [in,out] raiz Raiz da árvore
  * @param [in,out] nodo O novo nodo inserido na árvore
  */
 void balancear(Nodo **raiz, Nodo **nodo) {
@@ -271,7 +271,7 @@ void balancear(Nodo **raiz, Nodo **nodo) {
     if (VERMELHO(TIO_DE(*nodo))) {
         /// Pai vermelho e tio vermelho: alterar cores
         alterar_cores(&(*nodo));
-        // TODO: se o avô não é raíz, verificar se não se deve rotacionar
+        // TODO: se o avô não é raiz, verificar se não se deve rotacionar
         return;
     }
 
@@ -322,7 +322,7 @@ int _inserir(Nodo **subarvore, Nodo **nodo) {
 void inserir(Nodo **raiz, char *palavra) {
     Nodo *nodo = criar(palavra);
     if (!(*raiz)) {
-        COR_DE(nodo) = NEGRO; // raíz é de cor preta
+        COR_DE(nodo) = NEGRO; // raiz é de cor preta
         *raiz = nodo;
         return;
     }

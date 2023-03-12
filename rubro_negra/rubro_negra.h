@@ -8,7 +8,7 @@
 /// Representação da cor preta
 #define NEGRO 1
 
-/// Retorna verdadeiro se o pai é nulo, ou seja, é raíz
+/// Retorna verdadeiro se o pai é nulo, ou seja, é raiz
 #define EH_RAIZ(t) ((t)->pai == NULL ? 1 : 0)
 /// Retorna a subarvore esquerda
 #define ESQUERDA_DE(t) ((t)->esquerda)
@@ -72,14 +72,14 @@ Nodo *criar(char *palavra);
 
 /**
  * Insere uma palavra na árvore
- * @param [in,out] raiz ponteiro para a raíz
+ * @param [in,out] raiz ponteiro para a raiz
  * @param [in] palavra palavra que será inserida
  */
 void inserir(Nodo **raiz, char *palavra);
 
 /**
  * Pesquisa uma palavra na árvore
- * @param [in] raiz ponteiro para a raíz
+ * @param [in] raiz ponteiro para a raiz
  * @param [in] palavra palavra que se deseja buscar
  * @return Nulo se não foi encontrado, caso contrário retorna o raiz no qual a palavra se encontra
  */
@@ -91,7 +91,7 @@ Nodo *pesquisar(Nodo *raiz, char *palavra);
  * Indica a cor do nodo através das letras "r" (rubro), "n" (negro) e "o" representa a origem,
  * além da posição do nodo, se esquerda (E) ou direita (D).
  *
- * @param [in] nodo Raíz da árvore
+ * @param [in] nodo Raiz da árvore
  */
 void print(Nodo *nodo);
 
