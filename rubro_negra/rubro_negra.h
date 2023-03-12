@@ -109,7 +109,7 @@ void print(Nodo *nodo);
 char *nodo_str(Nodo *nodo);
 
 /**
- * Função auxiliar para a representação do typo Nodo em formato de string
+ * Função auxiliar para a representação do tipo Nodo em formato de string
  * @param [in] palavra Palavra do nodo em questão
  * @param [in] cor Cor em formato de string do nodo
  * @param [in] esquerda Palavra do filho esquerdo

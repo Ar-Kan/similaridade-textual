@@ -22,6 +22,9 @@ Nodo *criar(char *palavra) {
 /**
  * @breaf Realiza rotação simples à esquerda.
  *
+ * Rotação simples à esquerda (avô->direita->direita == nodo).
+ * Como o pai é vermelho e o tio é preto deve-se fazer uma rotação simples
+ * á esquerda e alterar cores do pai e do irmão (antigo avô).
  * @code
  *    {b}                 {b}
  *     |                   |
@@ -72,6 +75,9 @@ void rotacao_simples_esquerda(Nodo **raiz, Nodo **nodo) {
 /**
  * @breaf Realiza rotação simples à direita.
  *
+ * Rotação simples à direita (avô->esquerda->esquerda == nodo).
+ * Como o pai é vermelho e o tio é preto deve-se fazer uma rotação simples
+ * á direita e alterar cores do pai e do irmão (antigo avô).
  * @code
  *      {b}            {b}
  *       |              |
@@ -110,7 +116,7 @@ void rotacao_simples_direita(Nodo **raiz, Nodo **nodo) {
     }
     PAI_DE(DIREITA_DE(PAI_DE(*nodo))) = PAI_DE(*nodo); /// (a,pai)->(p), pai do irmão agora é o pai
 
-    /// 2. Troca cores do pai e irmão (antigo avô)
+    /// 2. Troca cores do pai (p) e irmão (a) (antigo avô)
     COR_DE(PAI_DE(*nodo)) = NEGRO;
     COR_DE(DIREITA_DE(PAI_DE(*nodo))) = RUBRO;
 
@@ -121,6 +127,11 @@ void rotacao_simples_direita(Nodo **raiz, Nodo **nodo) {
 
 /**
  * @breaf Realiza rotação dupla à direita.
+ *
+ * Rotação dupla à esquerda (avô->esquerda->direita == nodo).
+ * Como o pai é vermelho e o tio é preto deve-se fazer uma rotação simples
+ * á esquerda e depois uma rotação simples à direita (rotação dupla à direita)
+ * e alterar cores do próprio nodo e do filho direito (antigo avô).
  *
  * @code
  *      {b}                 {b}
@@ -164,7 +175,7 @@ void rotacao_dupla_direrita(Nodo **raiz, Nodo **nodo) {
     PAI_DE(avo) = *nodo; /// (a,pai)->(N)
     PAI_DE(pai) = *nodo; /// (p,pai)->(N)
 
-    /// 2. Troca cores do nodo e do novo irmão (antigo avô)
+    /// 2. Troca cores do nodo e do novo filho direito (antigo avô)
     COR_DE(*nodo) = NEGRO;
     COR_DE(avo) = RUBRO;
 
@@ -177,6 +188,10 @@ void rotacao_dupla_direrita(Nodo **raiz, Nodo **nodo) {
 /**
  * @breaf Realiza rotação dupla à esquerda.
  *
+ * Rotação dupla à direita (avô->direita->esquerda == nodo)
+ * Como o pai é vermelho e o tio é preto deve-se fazer uma rotação simples
+ * á direita e depois uma rotação simples à esquerda (rotação dupla à esquerda)
+ * e alterar cores do próprio nodo e do filho direito (antigo avô).
  * @code
  *      {b}                  {b}
  *       |                    |
@@ -219,7 +234,7 @@ void rotacao_dupla_esquerda(Nodo **raiz, Nodo **nodo) {
     PAI_DE(avo) = *nodo; /// (a,pai)->(N)
     PAI_DE(pai) = *nodo; /// (p,pai)->(N)
 
-    /// 2. Troca cores do nodo e do novo irmão (antigo avô)
+    /// 2. Troca cores do nodo e do filho direito (antigo avô)
     COR_DE(*nodo) = NEGRO;
     COR_DE(avo) = RUBRO;
 
@@ -229,7 +244,9 @@ void rotacao_dupla_esquerda(Nodo **raiz, Nodo **nodo) {
 }
 
 /**
- * Altera as cores do pai tio e avô do nodo
+ * @breaf Altera as cores do pai tio e avô do nodo
+ *
+ * Quando o pai é vermelho e tio é vermelho deve-se alterar cores do pai, tio e avô (exceto raiz)
  * @param nodo Nodo que é filho na transformação
  */
 void alterar_cores(Nodo **nodo) {
@@ -247,38 +264,32 @@ void alterar_cores(Nodo **nodo) {
  */
 void balancear(Nodo **raiz, Nodo **nodo) {
     if (!VERMELHO(PAI_DE(*nodo))) {
-        /// Pai preto, nada a se fazer
+        /// Pai preto: nada a se fazer
         return;
     }
 
     if (VERMELHO(TIO_DE(*nodo))) {
-        /// Pai vermelho e tio vermelho: alterar cores do pai, tio e avo (exceto raiz)
+        /// Pai vermelho e tio vermelho: alterar cores
         alterar_cores(&(*nodo));
         // TODO: se o avô não é raíz, verificar se não se deve rotacionar
         return;
     }
 
-    // se chegou aqui o avô deve existir
+    // se chegou aqui o avô existe
     int pai_esta_na_esquerda_do_avo = ESQUERDA_OU_NULL_DE(AVO_DE(*nodo)) == PAI_DE(*nodo);
     int nodo_esta_na_esquerda_do_pai = ESQUERDA_DE(PAI_DE(*nodo)) == *nodo;
 
-    /// Pai vermelho e tio preto: rotacionar e alterar cores do pai e avo
+    /// Pai vermelho e tio preto: rotacionar e alterar cores
     if (pai_esta_na_esquerda_do_avo) {
-        if (nodo_esta_na_esquerda_do_pai) {
-            /// rotação simples à direita (avô->esquerda->esquerda == nodo)
+        if (nodo_esta_na_esquerda_do_pai)
             rotacao_simples_direita(raiz, &(*nodo));
-        } else {
-            /// rotação dupla à esquerda (avô->esquerda->direita == nodo)
+        else
             rotacao_dupla_direrita(raiz, &(*nodo));
-        }
     } else {
-        if (nodo_esta_na_esquerda_do_pai) {
-            /// rotação dupla à direita (avô->direita->esquerda == nodo)
+        if (nodo_esta_na_esquerda_do_pai)
             rotacao_dupla_esquerda(raiz, &(*nodo));
-        } else {
-            /// rotação simples à esquerda (avô->direita->direita == nodo)
+        else
             rotacao_simples_esquerda(raiz, &(*nodo));
-        }
     }
 }
 

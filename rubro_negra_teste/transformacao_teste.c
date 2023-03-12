@@ -137,6 +137,7 @@ int teste_rotacao_simples_direita() {
  * @code
  * // execução
  * Nodo *raiz = NULL;
+ * inserir(&raiz, "e");
  * inserir(&raiz, "b");
  * inserir(&raiz, "a");
  * inserir(&raiz, "c");
