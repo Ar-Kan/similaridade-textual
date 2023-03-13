@@ -81,6 +81,35 @@ int teste_nodo_str() {
     return 0;
 }
 
+/**
+ * Testa a contagem de nodos de uma árvore
+ * @return Retorna 0 se não houve erros, 1 caso contrário
+ */
+int teste_contar_nodos() {
+    Nodo *raiz = NULL;
+    inserir(&raiz, "r");
+    inserir(&raiz, "e");
+    inserir(&raiz, "d");
+    inserir(&raiz, "b");
+    inserir(&raiz, "l");
+    inserir(&raiz, "a");
+    inserir(&raiz, "c");
+    inserir(&raiz, "k");
+    inserir(&raiz, "t");
+    inserir(&raiz, "g");
+    inserir(&raiz, "s");
+    inserir(&raiz, "f");
+
+    int nodos = contar_nodos(raiz);
+    if (nodos != 12) {
+        printf("Quantidade de nodos nao corresponde ao esperado\n");
+        printf("recebido: %d\n", nodos);
+        printf("esperado: 12\n");
+        return 1;
+    }
+    return 0;
+}
+
 int executa_testes_de_criacao() {
     printf("Testando \"criar nodo\"\n");
     if (teste_criar_nodo()) {
@@ -90,6 +119,11 @@ int executa_testes_de_criacao() {
     printf("Testando \"inserir nodo\"\n");
     if (teste_inserir()) {
         printf_vermelho("Teste de \"inserir nodo\" terminou com erros");
+        return 1;
+    }
+    printf("Testando \"contar nodos\"\n");
+    if (teste_contar_nodos()) {
+        printf_vermelho("Teste de \"contar nodos\" terminou com erros");
         return 1;
     }
     printf("Testando \"nodo string\"\n");

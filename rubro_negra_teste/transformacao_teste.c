@@ -302,8 +302,16 @@ int teste_integriadade_da_arvore() {
     inserir(&raiz, "g");
     inserir(&raiz, "s");
     inserir(&raiz, "f");
-    verifica_integridade_auxiliar(raiz);
-    return 0;
+
+    int nodos = contar_nodos(raiz);
+    if (nodos != 12) {
+        printf("Quantidade de nodos nao corresponde ao esperado\n");
+        printf("recebido: %d\n", nodos);
+        printf("esperado: 12\n");
+        return 1;
+    }
+
+    return verifica_integridade_auxiliar(raiz);
 }
 
 int executa_testes_de_transformacao() {

@@ -350,6 +350,13 @@ Nodo *pesquisar(Nodo *raiz, char *palavra) {
         return pesquisar(DIREITA_DE(raiz), palavra);
 }
 
+int contar_nodos(Nodo *raiz) {
+    if (raiz) {
+        return 1 + contar_nodos(ESQUERDA_DE(raiz)) + contar_nodos(DIREITA_DE(raiz));
+    }
+    return 0;
+}
+
 /**
  * Função recursiva auxiliar, para fazer o print da árvore
  * @param nodo Nodo atual

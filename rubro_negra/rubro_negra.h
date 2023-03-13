@@ -86,6 +86,13 @@ void inserir(Nodo **raiz, char *palavra);
 Nodo *pesquisar(Nodo *raiz, char *palavra);
 
 /**
+ * Retorna a quantidade de nodos existentes na árvore
+ * @param raiz Raiz da árvore ou subarvore
+ * @return Quantidade de nodos
+ */
+int contar_nodos(Nodo *raiz);
+
+/**
  * @breaf Printa a árvore usando o caminhamento direita central.
  *
  * Indica a cor do nodo através das letras "r" (rubro), "n" (negro) e "o" representa a origem,
