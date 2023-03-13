@@ -237,6 +237,75 @@ int teste_rotacao_dupla_direita() {
     return 0;
 }
 
+int verifica_integridade_auxiliar(Nodo *nodo) {
+    if (nodo) {
+        if (VERMELHO(nodo) && VERMELHO(PAI_DE(nodo))) {
+            printf("Foi encontrado um nodo vermelho com pai vermelho\n");
+            printf("nodo: ");
+            printf("%s\n", nodo_str(nodo));
+            printf("pai: ");
+            printf("%s\n", nodo_str(PAI_DE(nodo)));
+            return 1;
+        }
+        if (verifica_integridade_auxiliar(DIREITA_DE(nodo))) return 1;
+        if (verifica_integridade_auxiliar(ESQUERDA_DE(nodo))) return 1;
+    }
+    return 0;
+}
+
+/**
+ * Verifica se nenhum nodo vermelho possui pai vermelho
+ *
+ * @code
+ * // execução
+ * Nodo *raiz = NULL;
+ * inserir(&raiz, "r");
+ * inserir(&raiz, "e");
+ * inserir(&raiz, "d");
+ * inserir(&raiz, "b");
+ * inserir(&raiz, "l");
+ * inserir(&raiz, "a");
+ * inserir(&raiz, "c");
+ * inserir(&raiz, "k");
+ * inserir(&raiz, "t");
+ * inserir(&raiz, "g");
+ * inserir(&raiz, "s");
+ * inserir(&raiz, "f");
+ *
+ * // estrutura esperada:
+ *                         D: t (r)
+ *                 D: s (n)
+ *                         E: r (r)
+ *         D: l (r)
+ *                         D: k (r)
+ *                 E: g (n)
+ *                         E: f (r)
+ * o: e (n)
+ *                 D: d (n)
+ *                         E: c (r)
+ *         E: b (r)
+ *                 E: a (n)
+ * @endcode
+ * @return Retorna 0 se não houve erros, 1 caso contrário
+ */
+int teste_integriadade_da_arvore() {
+    Nodo *raiz = NULL;
+    inserir(&raiz, "r");
+    inserir(&raiz, "e");
+    inserir(&raiz, "d");
+    inserir(&raiz, "b");
+    inserir(&raiz, "l");
+    inserir(&raiz, "a");
+    inserir(&raiz, "c");
+    inserir(&raiz, "k");
+    inserir(&raiz, "t");
+    inserir(&raiz, "g");
+    inserir(&raiz, "s");
+    inserir(&raiz, "f");
+    verifica_integridade_auxiliar(raiz);
+    return 0;
+}
+
 int executa_testes_de_transformacao() {
     printf("Testando \"troca de cores\"\n");
     if (teste_troca_de_cores()) {
@@ -261,6 +330,11 @@ int executa_testes_de_transformacao() {
     printf("Testando \"rotacao dupla direita\"\n");
     if (teste_rotacao_dupla_direita()) {
         printf_vermelho("Teste de \"rotacao dupla direita\" terminou com erros");
+        return 1;
+    }
+    printf("Testando \"integridade da arvore\"\n");
+    if (teste_integriadade_da_arvore()) {
+        printf_vermelho("Teste de \"integridade da arvore\" terminou com erros");
         return 1;
     }
     return 0;

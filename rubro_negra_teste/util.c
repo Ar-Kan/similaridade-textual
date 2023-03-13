@@ -60,7 +60,7 @@ int compara_nodos(Nodo *recebido, NodoTeste *esperado) {
 }
 
 void printf_vermelho(char *mensagem) {
-    printf("\x1b[31m%s\x1b[0man", mensagem);
+    printf("\x1b[31m%s\x1b[0man\n", mensagem);
 }
 
 void printf_verde(char *mensagem) {
