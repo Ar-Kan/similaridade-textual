@@ -48,6 +48,36 @@ int teste_inserir() {
 }
 
 /**
+ * Testa a pesquisa de nodos na árvore
+ * @code
+ * // execução
+ * Nodo *raiz = NULL;
+ * inserir(&raiz, "a");
+ * inserir(&raiz, "b");
+ * inserir(&raiz, "a");
+ * print(raiz);
+ *
+ * // estrutura esperada:
+ *         D: b (r)
+ * o: a (n)
+ * @endcode
+ * @return Retorna 0 se não houve erros, 1 caso contrário
+ */
+int teste_pesquisar() {
+    Nodo *raiz = NULL;
+    inserir(&raiz, "a");
+    inserir(&raiz, "b");
+    inserir(&raiz, "a");
+
+    NodoTeste t1 = {.palavra="a", .cor=NEGRO, .esquerda=NULL, .direita="b", .pai=NULL};
+    if (compara_nodos(pesquisar(raiz, "a"), &t1)) return 1;
+    NodoTeste t2 = {.palavra="b", .cor=RUBRO, .esquerda=NULL, .direita=NULL, .pai="a"};
+    if (compara_nodos(pesquisar(raiz, "b"), &t2)) return 1;
+
+    return 0;
+}
+
+/**
  * Testa a representação de um tipo Nodo em string
  * @return Retorna 0 se não houve erros, 1 caso contrário
  */
@@ -74,7 +104,7 @@ int teste_nodo_str() {
         printf("Teste de \"nodo string\"\n");
         printf("recebido: ");
         printf("%s\n", recebido);
-        printf("eseprado: ");
+        printf("esperado: ");
         printf("%s\n", esperado);
         return 1;
     }
@@ -119,6 +149,11 @@ int executa_testes_de_criacao() {
     printf("Testando \"inserir nodo\"\n");
     if (teste_inserir()) {
         printf_vermelho("Teste de \"inserir nodo\" terminou com erros");
+        return 1;
+    }
+    printf("Testando \"pesqusar nodo\"\n");
+    if (teste_pesquisar()) {
+        printf_vermelho("Teste de \"pesquisar nodo\" terminou com erros");
         return 1;
     }
     printf("Testando \"contar nodos\"\n");
