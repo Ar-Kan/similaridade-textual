@@ -14,7 +14,7 @@ int executa_testes() {
         return 1;
     }
 
-    if (executa_testes_de_transformacao()) {
+    if (executa_testes_de_balanceamento()) {
         printf_vermelho(". Testes de transformacao terminaram com erro");
         return 1;
     }

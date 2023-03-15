@@ -314,7 +314,7 @@ int teste_integriadade_da_arvore() {
     return verifica_integridade_auxiliar(raiz);
 }
 
-int executa_testes_de_transformacao() {
+int executa_testes_de_balanceamento() {
     printf("Testando \"troca de cores\"\n");
     if (teste_troca_de_cores()) {
         printf_vermelho("Teste de \"troca de cores\" terminou com erros");
