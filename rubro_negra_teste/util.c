@@ -19,6 +19,9 @@ char *nodoTeste_str(NodoTeste *nodo) {
 
 int compara_nodos(Nodo *recebido, NodoTeste *esperado) {
     int erro = 0;
+    if (!recebido && !esperado) {
+        return 0;
+    }
     if (recebido != NULL && esperado == NULL) {
         printf("Recebido nodo nao-nulo\n");
         erro = 1;

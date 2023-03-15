@@ -49,30 +49,18 @@ int teste_inserir() {
 
 /**
  * Testa a pesquisa de nodos na árvore
- * @code
- * // execução
- * Nodo *raiz = NULL;
- * inserir(&raiz, "a");
- * inserir(&raiz, "b");
- * inserir(&raiz, "a");
- * print(raiz);
- *
- * // estrutura esperada:
- *         D: b (r)
- * o: a (n)
- * @endcode
  * @return Retorna 0 se não houve erros, 1 caso contrário
  */
 int teste_pesquisar() {
     Nodo *raiz = NULL;
     inserir(&raiz, "a");
     inserir(&raiz, "b");
-    inserir(&raiz, "a");
 
     NodoTeste t1 = {.palavra="a", .cor=NEGRO, .esquerda=NULL, .direita="b", .pai=NULL};
     if (compara_nodos(pesquisar(raiz, "a"), &t1)) return 1;
     NodoTeste t2 = {.palavra="b", .cor=RUBRO, .esquerda=NULL, .direita=NULL, .pai="a"};
     if (compara_nodos(pesquisar(raiz, "b"), &t2)) return 1;
+    if (compara_nodos(pesquisar(raiz, "c"), NULL)) return 1;
 
     return 0;
 }
