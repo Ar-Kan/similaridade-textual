@@ -32,15 +32,12 @@
 /// Retorna o pai do nodo
 #define PAI_DE(t) ((t)->pai)
 
-/// Retorna avô do nodo se existir, nulo caso contrário
-#define AVO_DE(t) (                 \
-    PAI_DE(t) == NULL               \
-        ? NULL                      \
-        : PAI_DE(PAI_DE(t)) == NULL \
-            ? NULL                  \
-            : PAI_DE(PAI_DE(t)))
+/// Retorna o avô do nodo
+/// @attention Se o nodo não possuir pai gerará um erro
+#define AVO_DE(t) (PAI_DE(PAI_DE(t)))
 
 /// Retorna o tio do nodo se existir, nulo caso contrário
+/// @attention Se o nodo não possuir pai gerará um erro
 #define TIO_DE(t) (                             \
     ESQUERDA_OU_NULL_DE(AVO_DE(t)) == PAI_DE(t) \
         ? DIREITA_OU_NULL_DE(AVO_DE(t))         \

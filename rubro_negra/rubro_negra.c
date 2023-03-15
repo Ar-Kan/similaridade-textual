@@ -50,16 +50,16 @@ void rotacao_simples_esquerda(Nodo **raiz, Nodo **nodo) {
     DIREITA_DE(ESQUERDA_DE(PAI_DE(*nodo))) = irmao; /// (a,dir)->[i], irmão agora é o sobrinho
     if (irmao) // irmão pode não existir
         PAI_DE(irmao) = DIREITA_DE(ESQUERDA_DE(PAI_DE(*nodo))); /// [i,pai]->(a), pai do sobrinho é o irmão
-    PAI_DE(PAI_DE(*nodo)) = PAI_DE(ESQUERDA_DE(PAI_DE(*nodo))); /// (p,pai)->{b}, bisavô agora é o avô
+    AVO_DE(*nodo) = PAI_DE(ESQUERDA_DE(PAI_DE(*nodo))); /// (p,pai)->{b}, bisavô agora é o avô
     // novo avô (antigo bisavô) pode não existir
-    if (PAI_DE(PAI_DE(*nodo))) {
+    if (AVO_DE(*nodo)) {
         /// {b,dir/esq}->(p), filho do bisavô agora é o pai
-        if (ESQUERDA_DE(PAI_DE(PAI_DE(*nodo))) == avo) {
+        if (ESQUERDA_DE(AVO_DE(*nodo)) == avo) {
             // pai está na esquerda do avô
-            ESQUERDA_DE(PAI_DE(PAI_DE(*nodo))) = PAI_DE(*nodo);
+            ESQUERDA_DE(AVO_DE(*nodo)) = PAI_DE(*nodo);
         } else {
             // pai está na direita do avô
-            DIREITA_DE(PAI_DE(PAI_DE(*nodo))) = PAI_DE(*nodo);
+            DIREITA_DE(AVO_DE(*nodo)) = PAI_DE(*nodo);
         }
     }
     PAI_DE(ESQUERDA_DE(PAI_DE(*nodo))) = PAI_DE(*nodo); /// (a,pai)->(p), pai do irmão agora é o pai
@@ -104,16 +104,16 @@ void rotacao_simples_direita(Nodo **raiz, Nodo **nodo) {
     ESQUERDA_DE(DIREITA_DE(PAI_DE(*nodo))) = irmao; /// (a,esq)->[i], irmão agora é o sobrinho
     if (irmao) // irmão pode não existir
         PAI_DE(irmao) = ESQUERDA_DE(DIREITA_DE(PAI_DE(*nodo))); /// [i,pai]->(a), pai do sobrinho é o irmão
-    PAI_DE(PAI_DE(*nodo)) = PAI_DE(DIREITA_DE(PAI_DE(*nodo))); /// (p,pai)->{b}, bisavô agora é o avô
+    AVO_DE(*nodo) = PAI_DE(DIREITA_DE(PAI_DE(*nodo))); /// (p,pai)->{b}, bisavô agora é o avô
     // novo avô (antigo bisavô) pode não existir
-    if (PAI_DE(PAI_DE(*nodo))) {
+    if (AVO_DE(*nodo)) {
         /// {b,dir/esq}->(a), filho do bisavô agora é o pai
-        if (ESQUERDA_DE(PAI_DE(PAI_DE(*nodo))) == avo) {
+        if (ESQUERDA_DE(AVO_DE(*nodo)) == avo) {
             // pai está na esquerda do avô
-            ESQUERDA_DE(PAI_DE(PAI_DE(*nodo))) = PAI_DE(*nodo);
+            ESQUERDA_DE(AVO_DE(*nodo)) = PAI_DE(*nodo);
         } else {
             // pai está na direita do avô
-            DIREITA_DE(PAI_DE(PAI_DE(*nodo))) = PAI_DE(*nodo);
+            DIREITA_DE(AVO_DE(*nodo)) = PAI_DE(*nodo);
         }
     }
     PAI_DE(DIREITA_DE(PAI_DE(*nodo))) = PAI_DE(*nodo); /// (a,pai)->(p), pai do irmão agora é o pai
@@ -154,7 +154,7 @@ void rotacao_simples_direita(Nodo **raiz, Nodo **nodo) {
  */
 void rotacao_dupla_direrita(Nodo **raiz, Nodo **nodo) {
     Nodo *pai = PAI_DE(*nodo); // (p)
-    Nodo *avo = PAI_DE(PAI_DE(*nodo)); // (a)
+    Nodo *avo = AVO_DE(*nodo); // (a)
 
     /// 1. Faz rotação dupla
     int avo_era_raiz = EH_RAIZ(avo);
@@ -183,7 +183,7 @@ void rotacao_dupla_direrita(Nodo **raiz, Nodo **nodo) {
 
     /// 3. Atualiza raiz se necessário
     if (avo_era_raiz)
-        *raiz = PAI_DE(PAI_DE(*nodo));
+        *raiz = AVO_DE(*nodo);
 
 }
 
@@ -213,7 +213,7 @@ void rotacao_dupla_direrita(Nodo **raiz, Nodo **nodo) {
  */
 void rotacao_dupla_esquerda(Nodo **raiz, Nodo **nodo) {
     Nodo *pai = PAI_DE(*nodo); // (p)
-    Nodo *avo = PAI_DE(PAI_DE(*nodo)); // (a)
+    Nodo *avo = AVO_DE(*nodo); // (a)
 
     /// 1. Faz rotação dupla
     int avo_era_raiz = EH_RAIZ(avo);
@@ -242,7 +242,7 @@ void rotacao_dupla_esquerda(Nodo **raiz, Nodo **nodo) {
 
     /// 3. Atualiza raiz se necessário
     if (avo_era_raiz)
-        *raiz = PAI_DE(PAI_DE(*nodo));
+        *raiz = AVO_DE(*nodo);
 }
 
 /**
@@ -275,7 +275,7 @@ void balancear(Nodo **raiz, Nodo **nodo) {
         alterar_cores(&(*nodo));
         if (EH_RAIZ(AVO_DE(*nodo))) return;
         /// se o avô não é raiz, verificar se não se deve balancear a subarvore superior
-        balancear(raiz, &PAI_DE(PAI_DE(*nodo)));
+        balancear(raiz, &AVO_DE(*nodo));
         return;
     }
 
