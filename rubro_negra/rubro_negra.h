@@ -75,6 +75,13 @@ Nodo *criar(char *palavra);
 void inserir(Nodo **raiz, char *palavra);
 
 /**
+ * Realiza o balanceamento da árvore
+ * @param [in,out] raiz Raiz da árvore
+ * @param [in,out] nodo O nodo que é base na base da subarvore
+ */
+void balancear(Nodo **raiz, Nodo **nodo);
+
+/**
  * Pesquisa uma palavra na árvore
  * @param [in] raiz ponteiro para a raiz
  * @param [in] palavra palavra que se deseja buscar
