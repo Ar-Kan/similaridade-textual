@@ -5,7 +5,7 @@
 
 int executa_testes_de_criacao();
 
-int executa_testes_de_transformacao();
+int executa_testes_de_balanceamento();
 
 int executa_testes();
 
