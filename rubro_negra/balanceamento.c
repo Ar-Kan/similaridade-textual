@@ -167,7 +167,7 @@ void rotacao_dupla_direrita(Nodo **raiz, Nodo **nodo) {
 
     /// 3. Atualiza raiz se necessário
     if (avo_era_raiz)
-        *raiz = AVO_DE(*nodo);
+        *raiz = *nodo;
 
 }
 
@@ -226,7 +226,7 @@ void rotacao_dupla_esquerda(Nodo **raiz, Nodo **nodo) {
 
     /// 3. Atualiza raiz se necessário
     if (avo_era_raiz)
-        *raiz = AVO_DE(*nodo);
+        *raiz = *nodo;
 }
 
 /**
