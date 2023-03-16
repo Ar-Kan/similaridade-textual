@@ -5,6 +5,14 @@
 #include "rubro_negra/rubro_negra.h"
 #include "util.h"
 
+/// Safe string compare
+int sstrcmp(char *str1, char *str2) {
+    if (!str1 && !str2) return 0;
+    if (!str1 || !str2) return 1;
+    return strcmp(str1, str2);
+}
+
+
 char *nodoTeste_str(NodoTeste *nodo) {
     if (!nodo)
         return "Nodo{NULL}";
@@ -23,31 +31,31 @@ int compara_nodos(Nodo *recebido, NodoTeste *esperado) {
         return 0;
     }
     if (recebido != NULL && esperado == NULL) {
-        printf("Recebido nodo nao-nulo\n");
+        printf("Recebido nodo nao-nulo, mas era esperado nulo\n");
         erro = 1;
     }
     if (recebido == NULL && esperado != NULL) {
-        printf("Recebido nodo nulo\n");
+        printf("Recebido nodo nulo, mas era esperado não nulo\n");
         erro = 1;
     }
     if (strcmp(PALAVRA_DE(recebido), PALAVRA_DE(esperado)) != 0) {
-        printf("Palavra nao corresponde ao esperado\n");
+        printf("Palavra do nodo nao corresponde ao esperado\n");
         erro = 1;
     }
     if (COR_DE(recebido) != COR_DE(esperado)) {
-        printf("Cor nao corresponde ao esperado\n");
+        printf("Cor do nodo nao corresponde ao esperado\n");
         erro = 1;
     }
-    if (PALAVRA_OU_NULL_DE(DIREITA_DE(recebido)) != DIREITA_DE(esperado)) {
-        printf("Direira nao corresponde ao esperado\n");
+    if (sstrcmp(PALAVRA_OU_NULL_DE(DIREITA_DE(recebido)), DIREITA_DE(esperado)) != 0) {
+        printf("Direira do nodo nao corresponde ao esperado\n");
         erro = 1;
     }
-    if (PALAVRA_OU_NULL_DE(ESQUERDA_DE(recebido)) != ESQUERDA_DE(esperado)) {
-        printf("Esquerda nao corresponde ao esperado\n");
+    if (sstrcmp(PALAVRA_OU_NULL_DE(ESQUERDA_DE(recebido)), ESQUERDA_DE(esperado)) != 0) {
+        printf("Esquerda do nodo nao corresponde ao esperado\n");
         erro = 1;
     }
-    if (PALAVRA_OU_NULL_DE(PAI_DE(recebido)) != PAI_DE(esperado)) {
-        printf("Pai nao corresponde ao esperado\n");
+    if (sstrcmp(PALAVRA_OU_NULL_DE(PAI_DE(recebido)), PAI_DE(esperado)) != 0) {
+        printf("Pai do nodo nao corresponde ao esperado\n");
         erro = 1;
     }
 
