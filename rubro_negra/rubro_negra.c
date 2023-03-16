@@ -10,11 +10,12 @@ Nodo *criar(char *palavra) {
         printf("Erro ao alocar novo nodo, memoria insuficiente.\n");
         return NULL;
     }
-    PALAVRA_DE(nodo) = palavra;
     COR_DE(nodo) = RUBRO; // novos nodos são vermelhos
     ESQUERDA_DE(nodo) = NULL;
     DIREITA_DE(nodo) = NULL;
     PAI_DE(nodo) = NULL;
+    PALAVRA_DE(nodo) = malloc(strlen(palavra) + 1);
+    strcpy(PALAVRA_DE(nodo), palavra);
     return nodo;
 }
 
