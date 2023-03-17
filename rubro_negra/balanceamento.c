@@ -1,4 +1,4 @@
-#include <stdlib.h>
+#include <stdio.h>
 
 #include "rubro_negra.h"
 
@@ -26,18 +26,18 @@
  */
 void rotacao_simples_esquerda(Nodo **raiz, Nodo **nodo) {
     /// 1. Rotaciona para a esquerda
-    Nodo *irmao = ESQUERDA_DE(PAI_DE(*nodo));
-    Nodo *avo = AVO_DE(*nodo);
+    Nodo *irmao = ESQUERDA_DE(PAI_DE(*nodo)); // i
+    Nodo *avo = AVO_DE(*nodo); // a
     int avo_era_raiz = EH_RAIZ(AVO_DE(*nodo));
 
-    ESQUERDA_DE(PAI_DE(*nodo)) = avo; /// (p,esq)->(a), avô agora é o irmão
-    DIREITA_DE(ESQUERDA_DE(PAI_DE(*nodo))) = irmao; /// (a,dir)->[i], irmão agora é o sobrinho
+    ESQUERDA_DE(PAI_DE(*nodo)) = avo; // (p,esq)->(a)
+    DIREITA_DE(avo) = irmao; // (a,dir)->[i]
     if (irmao) // irmão pode não existir
-        PAI_DE(irmao) = DIREITA_DE(ESQUERDA_DE(PAI_DE(*nodo))); /// [i,pai]->(a), pai do sobrinho é o irmão
-    AVO_DE(*nodo) = PAI_DE(ESQUERDA_DE(PAI_DE(*nodo))); /// (p,pai)->{b}, bisavô agora é o avô
+        PAI_DE(irmao) = avo; // [i,pai]->(a)
+    AVO_DE(*nodo) = PAI_DE(avo); // (p,pai)->{b}
     // novo avô (antigo bisavô) pode não existir
     if (AVO_DE(*nodo)) {
-        /// {b,dir/esq}->(p), filho do bisavô agora é o pai
+        // {b,dir/esq}->(p)
         if (ESQUERDA_DE(AVO_DE(*nodo)) == avo) {
             // pai está na esquerda do avô
             ESQUERDA_DE(AVO_DE(*nodo)) = PAI_DE(*nodo);
@@ -46,11 +46,11 @@ void rotacao_simples_esquerda(Nodo **raiz, Nodo **nodo) {
             DIREITA_DE(AVO_DE(*nodo)) = PAI_DE(*nodo);
         }
     }
-    PAI_DE(ESQUERDA_DE(PAI_DE(*nodo))) = PAI_DE(*nodo); /// (a,pai)->(p), pai do irmão agora é o pai
+    PAI_DE(avo) = PAI_DE(*nodo); // (a,pai)->(p)
 
     /// 2. Troca cores do pai e do irmão (antigo avô)
     COR_DE(PAI_DE(*nodo)) = NEGRO;
-    COR_DE(ESQUERDA_DE(PAI_DE(*nodo))) = RUBRO;
+    COR_DE(avo) = RUBRO;
 
     /// 3. Atualiza raiz se necessário
     if (avo_era_raiz)
@@ -80,18 +80,18 @@ void rotacao_simples_esquerda(Nodo **raiz, Nodo **nodo) {
  */
 void rotacao_simples_direita(Nodo **raiz, Nodo **nodo) {
     /// 1. Rotaciona para a direita
-    Nodo *irmao = DIREITA_DE(PAI_DE(*nodo));
-    Nodo *avo = AVO_DE(*nodo);
+    Nodo *irmao = DIREITA_DE(PAI_DE(*nodo)); // i
+    Nodo *avo = AVO_DE(*nodo); // a
     int avo_era_raiz = EH_RAIZ(avo);
 
-    DIREITA_DE(PAI_DE(*nodo)) = avo; /// (p,dir)->(a), avô agora é o irmão
-    ESQUERDA_DE(DIREITA_DE(PAI_DE(*nodo))) = irmao; /// (a,esq)->[i], irmão agora é o sobrinho
+    DIREITA_DE(PAI_DE(*nodo)) = avo; // (p,dir)->(a)
+    ESQUERDA_DE(avo) = irmao; // (a,esq)->[i]
     if (irmao) // irmão pode não existir
-        PAI_DE(irmao) = ESQUERDA_DE(DIREITA_DE(PAI_DE(*nodo))); /// [i,pai]->(a), pai do sobrinho é o irmão
-    AVO_DE(*nodo) = PAI_DE(DIREITA_DE(PAI_DE(*nodo))); /// (p,pai)->{b}, bisavô agora é o avô
+        PAI_DE(irmao) = avo; // [i,pai]->(a)
+    AVO_DE(*nodo) = PAI_DE(avo); // (p,pai)->{b}
     // novo avô (antigo bisavô) pode não existir
     if (AVO_DE(*nodo)) {
-        /// {b,dir/esq}->(a), filho do bisavô agora é o pai
+        // {b,dir/esq}->(a)
         if (ESQUERDA_DE(AVO_DE(*nodo)) == avo) {
             // pai está na esquerda do avô
             ESQUERDA_DE(AVO_DE(*nodo)) = PAI_DE(*nodo);
@@ -100,11 +100,11 @@ void rotacao_simples_direita(Nodo **raiz, Nodo **nodo) {
             DIREITA_DE(AVO_DE(*nodo)) = PAI_DE(*nodo);
         }
     }
-    PAI_DE(DIREITA_DE(PAI_DE(*nodo))) = PAI_DE(*nodo); /// (a,pai)->(p), pai do irmão agora é o pai
+    PAI_DE(avo) = PAI_DE(*nodo); // (a,pai)->(p)
 
     /// 2. Troca cores do pai (p) e irmão (a) (antigo avô)
     COR_DE(PAI_DE(*nodo)) = NEGRO;
-    COR_DE(DIREITA_DE(PAI_DE(*nodo))) = RUBRO;
+    COR_DE(avo) = RUBRO;
 
     /// 3. Atualiza raiz se necessário
     if (avo_era_raiz)
@@ -143,23 +143,23 @@ void rotacao_dupla_direrita(Nodo **raiz, Nodo **nodo) {
     /// 1. Faz rotação dupla
     int avo_era_raiz = EH_RAIZ(avo);
     if (!avo_era_raiz) {
-        /// (b,esq/dir)->(N)
+        // (b,esq/dir)->(N)
         if (ESQUERDA_DE(PAI_DE(avo)) == avo)
             ESQUERDA_DE(PAI_DE(avo)) = *nodo;
         else
             DIREITA_DE(PAI_DE(avo)) = *nodo;
     }
-    PAI_DE(*nodo) = PAI_DE(avo); /// (N,pai)->(b)
-    DIREITA_DE(pai) = ESQUERDA_DE(*nodo); /// (p,dir)->(n1)
-    ESQUERDA_DE(*nodo) = pai; /// (N,esq)->(p)
+    PAI_DE(*nodo) = PAI_DE(avo); // (N,pai)->(b)
+    DIREITA_DE(pai) = ESQUERDA_DE(*nodo); // (p,dir)->(n1)
+    ESQUERDA_DE(*nodo) = pai; // (N,esq)->(p)
     if (DIREITA_DE(pai))
-        PAI_DE(DIREITA_DE(pai)) = pai; /// (n1,pai)->(p)
-    ESQUERDA_DE(avo) = DIREITA_DE(*nodo); /// (a,esq)->(n2)
+        PAI_DE(DIREITA_DE(pai)) = pai; // (n1,pai)->(p)
+    ESQUERDA_DE(avo) = DIREITA_DE(*nodo); // (a,esq)->(n2)
     if (ESQUERDA_DE(avo))
-        PAI_DE(ESQUERDA_DE(avo)) = avo; /// (n2,pai)->(a)
-    DIREITA_DE(*nodo) = avo; /// (N,dir)->(a)
-    PAI_DE(avo) = *nodo; /// (a,pai)->(N)
-    PAI_DE(pai) = *nodo; /// (p,pai)->(N)
+        PAI_DE(ESQUERDA_DE(avo)) = avo; // (n2,pai)->(a)
+    DIREITA_DE(*nodo) = avo; // (N,dir)->(a)
+    PAI_DE(avo) = *nodo; // (a,pai)->(N)
+    PAI_DE(pai) = *nodo; // (p,pai)->(N)
 
     /// 2. Troca cores do nodo e do novo filho direito (antigo avô)
     COR_DE(*nodo) = NEGRO;
@@ -202,23 +202,23 @@ void rotacao_dupla_esquerda(Nodo **raiz, Nodo **nodo) {
     /// 1. Faz rotação dupla
     int avo_era_raiz = EH_RAIZ(avo);
     if (!avo_era_raiz) {
-        /// (b,esq/dir)->(N)
+        // (b,esq/dir)->(N)
         if (ESQUERDA_DE(PAI_DE(avo)) == avo)
             ESQUERDA_DE(PAI_DE(avo)) = *nodo;
         else
             DIREITA_DE(PAI_DE(avo)) = *nodo;
     }
-    PAI_DE(*nodo) = PAI_DE(avo); /// (N,pai)->(b)
-    ESQUERDA_DE(pai) = DIREITA_DE(*nodo); /// (p,esq)->(n1)
-    DIREITA_DE(*nodo) = pai; /// (N,dir)->(p)
+    PAI_DE(*nodo) = PAI_DE(avo); // (N,pai)->(b)
+    ESQUERDA_DE(pai) = DIREITA_DE(*nodo); // (p,esq)->(n1)
+    DIREITA_DE(*nodo) = pai; // (N,dir)->(p)
     if (ESQUERDA_DE(pai))
-        PAI_DE(ESQUERDA_DE(pai)) = pai; /// (n1,pai)->(p)
-    DIREITA_DE(avo) = ESQUERDA_DE(*nodo); /// (a,dir)->(n2)
+        PAI_DE(ESQUERDA_DE(pai)) = pai; // (n1,pai)->(p)
+    DIREITA_DE(avo) = ESQUERDA_DE(*nodo); // (a,dir)->(n2)
     if (DIREITA_DE(avo))
-        PAI_DE(ESQUERDA_DE(avo)) = avo; /// (n2,pai)->(a)
-    ESQUERDA_DE(*nodo) = avo; /// (N,esq)->(a)
-    PAI_DE(avo) = *nodo; /// (a,pai)->(N)
-    PAI_DE(pai) = *nodo; /// (p,pai)->(N)
+        PAI_DE(ESQUERDA_DE(avo)) = avo; // (n2,pai)->(a)
+    ESQUERDA_DE(*nodo) = avo; // (N,esq)->(a)
+    PAI_DE(avo) = *nodo; // (a,pai)->(N)
+    PAI_DE(pai) = *nodo; // (p,pai)->(N)
 
     /// 2. Troca cores do nodo e do filho direito (antigo avô)
     COR_DE(*nodo) = NEGRO;
