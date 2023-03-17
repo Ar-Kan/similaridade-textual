@@ -79,7 +79,7 @@ void inserir(Nodo **raiz, char *palavra);
  * @param [in,out] raiz Raiz da árvore
  * @param [in,out] nodo O nodo que é base na base da subarvore
  */
-void balancear(Nodo **raiz, Nodo **nodo);
+void balancear(Nodo **raiz, Nodo *nodo);
 
 /**
  * Pesquisa uma palavra na árvore

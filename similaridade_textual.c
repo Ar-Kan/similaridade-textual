@@ -10,25 +10,40 @@ int cria_arvore(char *caminho_texto_base, char *caminho_texto_de_busca, char *ca
 
     char *palavra, linhas[1000];
     char separadores[] = {" ,.&*%\?!;/-'@\"$#=><()][}{:\n\t"};
-    FILE *entrada;
+    FILE *entrada_stream;
 
-    entrada = fopen(caminho_stopwords, "r");
-    if (entrada == NULL) {
-        printf("Erro ao abrir o arquivo base \"%s\"", caminho_texto_base);
+    if ((entrada_stream = fopen(caminho_stopwords, "r")) == NULL) {
+        perror(caminho_stopwords);
+        printf("Erro ao abrir o arquivo de stopwords: %s\n", caminho_stopwords);
         return 1;
     }
 
     Nodo *stopwords = NULL;
-    while (fgets(linhas, 1000, entrada)) {
+    while (fgets(linhas, 1000, entrada_stream)) {
         palavra = strtok(linhas, separadores);
         while (palavra != NULL) {
             inserir(&stopwords, strlwr(palavra));
             palavra = strtok(NULL, separadores);
-            print(stopwords);
         }
     }
     printf("nodos: %d\n", contar_nodos(stopwords));
-    print(stopwords);
+//    print(stopwords);
+
+    if ((entrada_stream = fopen(caminho_stopwords, "r")) == NULL) {
+        perror(caminho_stopwords);
+        printf("Erro ao abrir o arquivo de stopwords: %s\n", caminho_stopwords);
+        return 1;
+    }
+    while (fgets(linhas, 1000, entrada_stream)) {
+        palavra = strtok(linhas, separadores);
+        while (palavra != NULL) {
+            if (!pesquisar(stopwords, palavra)) {
+                printf("palavra nao inserida: %s\n", palavra);
+            }
+            palavra = strtok(NULL, separadores);
+        }
+    }
+    printf("finish");
 
     return 0;
 }

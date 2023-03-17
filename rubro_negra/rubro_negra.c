@@ -55,7 +55,7 @@ void inserir(Nodo **raiz, char *palavra) {
     }
     int inserido = _inserir(raiz, &nodo);
     if (inserido)
-        balancear(raiz, &nodo);
+        balancear(raiz, nodo);
 }
 
 Nodo *pesquisar(Nodo *raiz, char *palavra) {
