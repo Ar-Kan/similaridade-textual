@@ -57,4 +57,4 @@ dkms.conf
 out
 gen
 
-cmake-build-debug/
+cmake-build-*/

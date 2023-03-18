@@ -26,7 +26,7 @@ Nodo *criar(char *palavra) {
  * @param [in,out] nodo Nodo que será inserido
  * @return 1 se foi inserido com sucesso, 0 caso a palavra já exista
  */
-int _inserir(Nodo **subarvore, Nodo **nodo) {
+int inserir_auxiliar(Nodo **subarvore, Nodo **nodo) {
     int comparacao = strcmp(PALAVRA_DE(*nodo), PALAVRA_DE(*subarvore));
     if (comparacao == 0) return 0;
     if (comparacao < 0) {
@@ -35,14 +35,14 @@ int _inserir(Nodo **subarvore, Nodo **nodo) {
             ESQUERDA_DE(*subarvore) = *nodo;
             return 1;
         }
-        return _inserir(&ESQUERDA_DE(*subarvore), nodo);
+        return inserir_auxiliar(&ESQUERDA_DE(*subarvore), nodo);
     } else {
         if (DIREITA_DE(*subarvore) == NULL) {
             PAI_DE(*nodo) = *subarvore;
             DIREITA_DE(*subarvore) = *nodo;
             return 1;
         }
-        return _inserir(&DIREITA_DE(*subarvore), nodo);
+        return inserir_auxiliar(&DIREITA_DE(*subarvore), nodo);
     }
 }
 
@@ -55,7 +55,7 @@ void inserir(Nodo **raiz, char *palavra) {
         *raiz = nodo;
         return;
     }
-    int inserido = _inserir(raiz, &nodo);
+    int inserido = inserir_auxiliar(raiz, &nodo);
     if (inserido)
         balancear(raiz, nodo);
 }
