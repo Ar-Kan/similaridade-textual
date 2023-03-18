@@ -16,8 +16,6 @@ add_executable(trabalho_final
         rubro_negra/testes/util.h
         rubro_negra/testes/criacao_teste.c
         rubro_negra/balanceamento.c
-        similaridade_textual.c
-        similaridade_textual.h
         rubro_negra/fila/fila.h
         rubro_negra/fila/fila.c
         rubro_negra/testes/fila_teste.c
