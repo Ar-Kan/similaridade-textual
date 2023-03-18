@@ -1,8 +1,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <math.h>
 
 #include "rubro_negra.h"
+#include "rubro_negra/fila/fila.h"
 
 Nodo *criar(char *palavra) {
     Nodo *nodo = (Nodo *) malloc(sizeof(Nodo));
@@ -58,6 +60,36 @@ void inserir(Nodo **raiz, char *palavra) {
     int inserido = _inserir(raiz, &nodo);
     if (inserido)
         balancear(raiz, nodo);
+}
+
+Nodo *jump_search_arvore(Nodo *raiz, char *palavra, int quantidade_de_nodos) {
+    int amplitude = floor(sqrt(quantidade_de_nodos));
+    int inicio;
+    int final = amplitude;
+
+//    printf("palavra buscada: %s\n", palavra);
+//    printf("final: %d\n", final);
+//    printNthNode(raiz, final);
+//    iterative_inorder(raiz, final);
+    Nodo *nodo_no_final = NULL;// iterative_inorder(raiz, final);
+    while (strcmp(PALAVRA_DE(nodo_no_final), palavra) < 0 && final < quantidade_de_nodos) {
+        inicio = final;
+        final += amplitude;
+        if (final > quantidade_de_nodos - 1)
+            final = quantidade_de_nodos;
+        nodo_no_final = NULL;// iterative_inorder(raiz, final);
+//        printf("final: %d\n", final);
+//        printf("palavra: %s\n", palavra);
+//        printf("palavra nodo: %s\n", PALAVRA_DE(nodo_no_final));
+    }
+
+    Nodo *nodo_atual = NULL;
+    for (int i = inicio; i < final; i++) {
+        nodo_atual = NULL;// iterative_inorder(raiz, i);
+        if (strcmp(PALAVRA_DE(nodo_atual), palavra) == 0)
+            return nodo_atual;
+    }
+    return NULL;
 }
 
 Nodo *pesquisar(Nodo *raiz, char *palavra) {
