@@ -3,6 +3,11 @@
 
 #include "rubro_negra/rubro_negra.h"
 
+#define PRIMEIRO_DE(t) ((t)->primeiro)
+#define ULTIMO_DE(t) ((t)->ultimo)
+#define NODO_DE(t) ((t)->nodo)
+#define ELO_DE(t) ((t)->elo)
+
 typedef struct TipoFila {
     Nodo *nodo;
     struct TipoFila *elo;

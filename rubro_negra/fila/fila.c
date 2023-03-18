@@ -8,8 +8,8 @@ Fila *inicializar_fila() {
     Fila *fila = (Fila *) malloc(sizeof(Fila)); // aloca descritor de fila
 
     if (fila) { // testa se conseguiu alocar o descritor
-        fila->primeiro = NULL; // inicializa ponteiros
-        fila->ultimo = NULL;
+        PRIMEIRO_DE(fila) = NULL; // inicializa ponteiros
+        ULTIMO_DE(fila) = NULL;
     }
     return fila;
 }
@@ -18,7 +18,7 @@ int fila_esta_vazia(Fila *fila) {
     if (!fila) {
         printf("descritor nao alocado");
         return -1;
-    } else if (!(fila->primeiro))
+    } else if (!PRIMEIRO_DE(fila))
         return 1;
     else
         return 0;
@@ -30,10 +30,10 @@ Nodo *consultar_fila(Fila *fila) {
         printf("descritor nao alocado");
         return 0;
     }
-    if (!(fila->primeiro))
+    if (!PRIMEIRO_DE(fila))
         return 0;
     else
-        return fila->primeiro->nodo;
+        return NODO_DE(PRIMEIRO_DE(fila));
 
 }
 
@@ -44,13 +44,13 @@ int inserir_na_fila(Fila **fila, Nodo *nodo) {
     TipoFila *novo;
     if (*fila) { // testa se o descritor foi alocado
         novo = (TipoFila *) malloc(sizeof(TipoFila));
-        novo->nodo = nodo;
-        novo->elo = NULL;
-        if (!((*fila)->primeiro)) // vai ser o primeiro da fila
-            (*fila)->primeiro = novo;
+        NODO_DE(novo) = nodo;
+        ELO_DE(novo) = NULL;
+        if (!PRIMEIRO_DE(*fila)) // vai ser o primeiro da fila
+            PRIMEIRO_DE(*fila) = novo;
         else
-            (*fila)->ultimo->elo = novo; // insere no final
-        (*fila)->ultimo = novo;
+            ELO_DE(ULTIMO_DE(*fila)) = novo; // insere no final
+        ULTIMO_DE(*fila) = novo;
         return 1;
     } else {
         printf("descritor nao alocado");
@@ -62,13 +62,13 @@ int inserir_na_fila(Fila **fila, Nodo *nodo) {
 int remover_da_fila(Fila **fila, Nodo **nodo) {
     TipoFila *ptaux;
     if (*fila) { //testa se o descritor foi alocado
-        if ((*fila)->primeiro) { // testa se tem algum elemento na fila
-            ptaux = (*fila)->primeiro;
-            *nodo = (*fila)->primeiro->nodo;
-            (*fila)->primeiro = (*fila)->primeiro->elo;
+        if (PRIMEIRO_DE(*fila)) { // testa se tem algum elemento na fila
+            ptaux = PRIMEIRO_DE(*fila);
+            *nodo = NODO_DE(PRIMEIRO_DE(*fila));
+            PRIMEIRO_DE(*fila) = ELO_DE(PRIMEIRO_DE(*fila));
             free(ptaux);
-            if (!((*fila)->primeiro)) // testa se a fila ficou vazia
-                (*fila)->ultimo = NULL;
+            if (!PRIMEIRO_DE(*fila)) // testa se a fila ficou vazia
+                ULTIMO_DE(*fila) = NULL;
             return 1;
         }
     } else {
@@ -82,10 +82,10 @@ int remover_da_fila(Fila **fila, Nodo **nodo) {
 void imprimir_fila(Fila *fila) {
     TipoFila *ptaux;
     if (fila) {
-        if (fila->primeiro) {
+        if (PRIMEIRO_DE(fila)) {
             puts("---Imprimindo fila---");
-            for (ptaux = fila->primeiro; ptaux != NULL; ptaux = ptaux->elo)
-                printf("\"%s\"\n", PALAVRA_OU_NULL_DE(ptaux->nodo));
+            for (ptaux = PRIMEIRO_DE(fila); ptaux != NULL; ptaux = ELO_DE(ptaux))
+                printf("\"%s\"\n", nodo_str(NODO_DE(ptaux)));
             puts("-------Fim fila------");
         }
     } else
@@ -95,9 +95,9 @@ void imprimir_fila(Fila *fila) {
 
 void destruir_fila(Fila **fila) {
     TipoFila *ptaux;
-    while ((*fila)->primeiro) {
-        ptaux = (*fila)->primeiro; // guarda o endereço do primeiro
-        (*fila)->primeiro = (*fila)->primeiro->elo; // o próximo passa a ser o topo
+    while (PRIMEIRO_DE(*fila)) {
+        ptaux = PRIMEIRO_DE(*fila); // guarda o endereço do primeiro
+        PRIMEIRO_DE(*fila) = ELO_DE(PRIMEIRO_DE(*fila)); // o próximo passa a ser o topo
         free(ptaux); // libera o que estava no topo
     }
     free(*fila);
