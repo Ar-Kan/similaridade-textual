@@ -262,7 +262,7 @@ void balancear(Nodo **raiz, Nodo *nodo) {
     }
 
     // se chegou aqui o avô existe
-    int pai_esta_na_esquerda_do_avo = ESQUERDA_OU_NULL_DE(AVO_DE(nodo)) == PAI_DE(nodo);
+    int pai_esta_na_esquerda_do_avo = ESQUERDA_DE(AVO_DE(nodo)) == PAI_DE(nodo);
     int nodo_esta_na_esquerda_do_pai = ESQUERDA_DE(PAI_DE(nodo)) == nodo;
 
     /// Pai vermelho e tio preto: rotacionar e alterar cores

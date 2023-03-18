@@ -47,6 +47,8 @@ int _inserir(Nodo **subarvore, Nodo **nodo) {
 }
 
 void inserir(Nodo **raiz, char *palavra) {
+    if (!palavra) return;
+
     Nodo *nodo = criar(palavra);
     if (!(*raiz)) {
         COR_DE(nodo) = NEGRO; // raiz é de cor preta

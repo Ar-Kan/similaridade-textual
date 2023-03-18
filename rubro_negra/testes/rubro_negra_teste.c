@@ -22,7 +22,15 @@ int executa_testes() {
         printf_vermelho(". Testes de transformacao terminaram com erro");
         return 1;
     }
-    printf(". Testes de balanceamento executaram com sucess\n");
+    printf(". Testes de balanceamento executaram com sucesso\n");
+
+    printf("\n");
+    printf(". Iniciando testes de fila\n");
+    if (executa_testes_de_fila()) {
+        printf_vermelho(". Testes de fila terminaram com erro");
+        return 1;
+    }
+    printf(". Testes de fila executaram com sucesso\n");
 
     printf("\n");
     printf_verde(". Testes executaram com sucesso");

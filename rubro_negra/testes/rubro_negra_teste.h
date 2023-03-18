@@ -7,6 +7,8 @@ int executa_testes_de_criacao();
 
 int executa_testes_de_balanceamento();
 
+int executa_testes_de_fila();
+
 int executa_testes();
 
 #endif //RUBRO_NEGRA_TESTE
