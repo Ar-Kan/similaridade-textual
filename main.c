@@ -6,7 +6,7 @@
 #include "rubro_negra/testes/rubro_negra_teste.h"
 #include "rubro_negra/fila_rubro_negra.h"
 
-int computa_jacard(char *caminho_texto_a, char *caminho_texto_b, char *caminho_stopwords) {
+int computa_jaccard(char *caminho_texto_a, char *caminho_texto_b, char *caminho_stopwords) {
 
     char *palavra, linhas[1000];
     char separadores[] = {" ,.&*%\?!;/-'@\"$#=><()][}{:\n\t"};
@@ -75,10 +75,9 @@ int computa_jacard(char *caminho_texto_a, char *caminho_texto_b, char *caminho_s
     } else {
         fila = listar_nodos(texto_b);
     }
-    Nodo *proximo_nodo = NULL;
     int palavras_em_comum = 0;
-    while (!fila_esta_vazia(fila)) {
-        remover_da_fila(&fila, &proximo_nodo);
+    while (QUANTIDADE_DE_ELEMENTOS_DE(fila)) {
+        Nodo *proximo_nodo = remover_da_fila(&fila);
         if (pesquisar(texto_a, PALAVRA_DE(proximo_nodo))) {
             palavras_em_comum++;
         }
@@ -87,6 +86,8 @@ int computa_jacard(char *caminho_texto_a, char *caminho_texto_b, char *caminho_s
     end = clock();
     tempo_total = (float) (end - start) / CLOCKS_PER_SEC * 1000;
 
+    int total_de_palavras = (tamanho_arvore(texto_a) + tamanho_arvore(texto_b)) - palavras_em_comum;
+
 
     printf("- %d stopwords carregadas\n", tamanho_arvore(stopwords));
     printf("- %d palavras carregadas para o texto: \"%s\"\n", tamanho_arvore(texto_a), caminho_texto_a);
@@ -94,7 +95,6 @@ int computa_jacard(char *caminho_texto_a, char *caminho_texto_b, char *caminho_s
 
     printf("- %d palavras em comum\n", palavras_em_comum);
 
-    int total_de_palavras = (tamanho_arvore(texto_a) + tamanho_arvore(texto_b)) - palavras_em_comum;
     printf("- %d total de palavras\n", total_de_palavras);
 
     printf("Indice de Jacard: %f\n", palavras_em_comum * 1.0 / total_de_palavras);
@@ -118,6 +118,6 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    computa_jacard(argv[1], argv[2], argv[3]);
+    computa_jaccard(argv[1], argv[2], argv[3]);
     return 0;
 }

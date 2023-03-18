@@ -10,6 +10,7 @@ Fila *inicializar_fila() {
     if (fila) { // testa se conseguiu alocar o descritor
         PRIMEIRO_DE(fila) = NULL; // inicializa ponteiros
         ULTIMO_DE(fila) = NULL;
+        QUANTIDADE_DE_ELEMENTOS_DE(fila) = 0;
     }
     return fila;
 }
@@ -50,6 +51,7 @@ int inserir_na_fila(Fila **fila, Nodo *nodo) {
         else
             ELO_DE(ULTIMO_DE(*fila)) = novo; // insere no final
         ULTIMO_DE(*fila) = novo;
+        QUANTIDADE_DE_ELEMENTOS_DE(*fila) += 1;
         return 1;
     } else {
         printf("descritor nao alocado");
@@ -71,23 +73,24 @@ int tamanho_da_fila(Fila *fila) {
         return 0;
 }
 
-int remover_da_fila(Fila **fila, Nodo **nodo) {
+Nodo *remover_da_fila(Fila **fila) {
     TipoFila *ptaux;
+    Nodo *nodo = NULL;
     if (*fila) { //testa se o descritor foi alocado
         if (PRIMEIRO_DE(*fila)) { // testa se tem algum elemento na fila
             ptaux = PRIMEIRO_DE(*fila);
-            *nodo = NODO_DE(PRIMEIRO_DE(*fila));
+            nodo = NODO_DE(PRIMEIRO_DE(*fila));
             PRIMEIRO_DE(*fila) = ELO_DE(PRIMEIRO_DE(*fila));
             free(ptaux);
             if (!PRIMEIRO_DE(*fila)) // testa se a fila ficou vazia
                 ULTIMO_DE(*fila) = NULL;
-            return 1;
+            QUANTIDADE_DE_ELEMENTOS_DE(*fila) -= 1;
         }
     } else {
         printf("descritor nao alocado");
-        return 0;
+        return NULL;
     }
-    return 0;
+    return nodo;
 }
 
 void imprimir_fila(Fila *fila) {
@@ -105,6 +108,7 @@ void imprimir_fila(Fila *fila) {
 
 void destruir_fila(Fila **fila) {
     TipoFila *ptaux;
+    QUANTIDADE_DE_ELEMENTOS_DE(*fila) = 0;
     while (PRIMEIRO_DE(*fila)) {
         ptaux = PRIMEIRO_DE(*fila); // guarda o endereço do primeiro
         PRIMEIRO_DE(*fila) = ELO_DE(PRIMEIRO_DE(*fila)); // o próximo passa a ser o topo

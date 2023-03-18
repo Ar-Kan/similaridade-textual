@@ -1,11 +1,19 @@
+/** @file fila.h */
+
 #include <stdio.h>
 #include <stdlib.h>
 
 #include "rubro_negra/rubro_negra.h"
 
-#define PRIMEIRO_DE(t) ((t)->primeiro)
-#define ULTIMO_DE(t) ((t)->ultimo)
+/// Retorna o primeiro item na fila
+#define PRIMEIRO_DE(f) ((f)->primeiro)
+/// Retorna o último item na fila
+#define ULTIMO_DE(f) ((f)->ultimo)
+/// Retorna a quantidade de elementos existentes na fila
+#define QUANTIDADE_DE_ELEMENTOS_DE(f) ((f)->quantidade_de_elementos)
+/// Retorna o nodo existente no elemento da fila
 #define NODO_DE(t) ((t)->nodo)
+/// Retorna o elo do nodo
 #define ELO_DE(t) ((t)->elo)
 
 typedef struct TipoFila {
@@ -14,10 +22,10 @@ typedef struct TipoFila {
 } TipoFila;
 
 typedef struct Fila {
+    int quantidade_de_elementos;
     struct TipoFila *primeiro;
     struct TipoFila *ultimo;
 } Fila;
-
 
 /**
  * Inicializa a fila
@@ -47,15 +55,22 @@ void imprimir_fila(Fila *fila);
  */
 int inserir_na_fila(Fila **fila, Nodo *nodo);
 
+/**
+ * Itera sobre a fila para contar a quantidade de elementos existentes
+ *
+ * @see fila.h::QUANTIDADE_DE_ELEMENTOS_DE()
+ *
+ * @param fila
+ * @return
+ */
 int tamanho_da_fila(Fila *fila);
 
 /**
- * Remove o próximo item da fila, retornando o nodo passado como parâmetro
+ * Remove o próximo item da fila retornando-o
  * @param fila
- * @param nodo Próximo item na fila
- * @return 0 se a fila não possui mais itens, 1 caso contrário
+ * @return Retorna o próximo item
  */
-int remover_da_fila(Fila **fila, Nodo **nodo);
+Nodo *remover_da_fila(Fila **fila);
 
 /**
  * Destroi a lista

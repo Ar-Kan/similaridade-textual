@@ -28,19 +28,19 @@ int teste_insere_na_fila() {
 
     Nodo *proximo = NULL;
 
-    remover_da_fila(&fila, &proximo);
+    proximo = remover_da_fila(&fila);
     NodoTeste t4 = {.palavra="a", .cor=NEGRO, .esquerda=NULL, .direita=NULL, .pai="b"};
     if (compara_nodos(proximo, &t4)) return 1;
 
-    remover_da_fila(&fila, &proximo);
+    proximo = remover_da_fila(&fila);
     NodoTeste t3 = {.palavra="b", .cor=NEGRO, .esquerda="a", .direita="c", .pai=NULL};
     if (compara_nodos(proximo, &t3)) return 1;
 
-    remover_da_fila(&fila, &proximo);
+    proximo = remover_da_fila(&fila);
     NodoTeste t2 = {.palavra="c", .cor=NEGRO, .esquerda=NULL, .direita="d", .pai="b"};
     if (compara_nodos(proximo, &t2)) return 1;
 
-    remover_da_fila(&fila, &proximo);
+    proximo = remover_da_fila(&fila);
     NodoTeste t1 = {.palavra="d", .cor=RUBRO, .esquerda=NULL, .direita=NULL, .pai="c"};
     if (compara_nodos(proximo, &t1)) return 1;
 
