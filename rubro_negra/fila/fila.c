@@ -85,7 +85,7 @@ void imprimir_fila(Fila *fila) {
         if (PRIMEIRO_DE(fila)) {
             puts("---Imprimindo fila---");
             for (ptaux = PRIMEIRO_DE(fila); ptaux != NULL; ptaux = ELO_DE(ptaux))
-                printf("\"%s\"\n", nodo_str(NODO_DE(ptaux)));
+                printf("%s\n", nodo_str(NODO_DE(ptaux)));
             puts("-------Fim fila------");
         }
     } else

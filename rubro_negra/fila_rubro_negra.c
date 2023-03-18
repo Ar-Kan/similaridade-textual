@@ -2,9 +2,9 @@
 
 void listar_nodos_auxiliar(Nodo *nodo, Fila **fila) {
     if (nodo) {
+        listar_nodos_auxiliar(ESQUERDA_DE(nodo), fila);
         inserir_na_fila(fila, nodo);
         listar_nodos_auxiliar(DIREITA_DE(nodo), fila);
-        listar_nodos_auxiliar(ESQUERDA_DE(nodo), fila);
     }
 }
 

@@ -27,6 +27,11 @@ int teste_insere_na_fila() {
     }
 
     Nodo *proximo = NULL;
+
+    remover_da_fila(&fila, &proximo);
+    NodoTeste t4 = {.palavra="a", .cor=NEGRO, .esquerda=NULL, .direita=NULL, .pai="b"};
+    if (compara_nodos(proximo, &t4)) return 1;
+
     remover_da_fila(&fila, &proximo);
     NodoTeste t3 = {.palavra="b", .cor=NEGRO, .esquerda="a", .direita="c", .pai=NULL};
     if (compara_nodos(proximo, &t3)) return 1;
@@ -38,10 +43,6 @@ int teste_insere_na_fila() {
     remover_da_fila(&fila, &proximo);
     NodoTeste t1 = {.palavra="d", .cor=RUBRO, .esquerda=NULL, .direita=NULL, .pai="c"};
     if (compara_nodos(proximo, &t1)) return 1;
-
-    remover_da_fila(&fila, &proximo);
-    NodoTeste t4 = {.palavra="a", .cor=NEGRO, .esquerda=NULL, .direita=NULL, .pai="b"};
-    if (compara_nodos(proximo, &t4)) return 1;
 
     if (!fila_esta_vazia(fila)) {
         printf("A fila nao se esvaziou apos a remocao dos seus itens");
