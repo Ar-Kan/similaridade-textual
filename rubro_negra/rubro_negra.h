@@ -94,7 +94,7 @@ Nodo *pesquisar(Nodo *raiz, char *palavra);
  * @param raiz Raiz da árvore ou subarvore
  * @return Quantidade de nodos
  */
-int contar_nodos(Nodo *raiz);
+int tamanho_arvore(Nodo *raiz);
 
 /**
  * @breaf Printa a árvore usando o caminhamento direita central.

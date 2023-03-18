@@ -6,7 +6,7 @@
 #include "rubro_negra/testes/rubro_negra_teste.h"
 #include "rubro_negra/fila_rubro_negra.h"
 
-int computa_jacard(char *caminho_texto_base, char *caminho_texto_de_busca, char *caminho_stopwords) {
+int computa_jacard(char *caminho_texto_a, char *caminho_texto_b, char *caminho_stopwords) {
 
     char *palavra, linhas[1000];
     char separadores[] = {" ,.&*%\?!;/-'@\"$#=><()][}{:\n\t"};
@@ -34,17 +34,17 @@ int computa_jacard(char *caminho_texto_base, char *caminho_texto_de_busca, char 
     fclose(entrada_stream);
 
     // texto base
-    if ((entrada_stream = fopen(caminho_texto_base, "r")) == NULL) {
-        perror(caminho_texto_base);
-        printf("Erro ao abrir o arquivo: \"%s\"\n", caminho_texto_base);
+    if ((entrada_stream = fopen(caminho_texto_a, "r")) == NULL) {
+        perror(caminho_texto_a);
+        printf("Erro ao abrir o arquivo: \"%s\"\n", caminho_texto_a);
         return 1;
     }
-    Nodo *texto_base = NULL;
+    Nodo *texto_a = NULL;
     while (fgets(linhas, 1000, entrada_stream)) {
         palavra = strlwr(strtok(linhas, separadores));
         while (palavra != NULL) {
             if (!pesquisar(stopwords, palavra)) {
-                inserir(&texto_base, palavra);
+                inserir(&texto_a, palavra);
             }
             palavra = strlwr(strtok(NULL, separadores));
         }
@@ -52,29 +52,34 @@ int computa_jacard(char *caminho_texto_base, char *caminho_texto_de_busca, char 
     fclose(entrada_stream);
 
     // texto de busca
-    if ((entrada_stream = fopen(caminho_texto_de_busca, "r")) == NULL) {
-        perror(caminho_texto_de_busca);
-        printf("Erro ao abrir o arquivo: \"%s\"\n", caminho_texto_de_busca);
+    if ((entrada_stream = fopen(caminho_texto_b, "r")) == NULL) {
+        perror(caminho_texto_b);
+        printf("Erro ao abrir o arquivo: \"%s\"\n", caminho_texto_b);
         return 1;
     }
-    Nodo *texto_de_busca = NULL;
+    Nodo *texto_b = NULL;
     while (fgets(linhas, 1000, entrada_stream)) {
         palavra = strlwr(strtok(linhas, separadores));
         while (palavra != NULL) {
             if (!pesquisar(stopwords, palavra)) {
-                inserir(&texto_de_busca, palavra);
+                inserir(&texto_b, palavra);
             }
             palavra = strlwr(strtok(NULL, separadores));
         }
     }
     fclose(entrada_stream);
 
-    Fila *fila = listar_nodos(texto_de_busca);
-    Nodo *proximo = NULL;
+    Fila *fila = NULL;
+    if (tamanho_arvore(texto_a) <= tamanho_arvore(texto_b)) {
+        fila = listar_nodos(texto_a);
+    } else {
+        fila = listar_nodos(texto_b);
+    }
+    Nodo *proximo_nodo = NULL;
     int palavras_em_comum = 0;
     while (!fila_esta_vazia(fila)) {
-        remover_da_fila(&fila, &proximo);
-        if (pesquisar(texto_base, PALAVRA_DE(proximo))) {
+        remover_da_fila(&fila, &proximo_nodo);
+        if (pesquisar(texto_a, PALAVRA_DE(proximo_nodo))) {
             palavras_em_comum++;
         }
     }
@@ -83,13 +88,13 @@ int computa_jacard(char *caminho_texto_base, char *caminho_texto_de_busca, char 
     tempo_total = (float) (end - start) / CLOCKS_PER_SEC * 1000;
 
 
-    printf("- %d stopwords carregadas\n", contar_nodos(stopwords));
-    printf("- %d palavras carregadas para o texto: \"%s\"\n", contar_nodos(texto_base), caminho_texto_base);
-    printf("- %d palavras carregadas para o texto: \"%s\"\n", contar_nodos(texto_de_busca), caminho_texto_de_busca);
+    printf("- %d stopwords carregadas\n", tamanho_arvore(stopwords));
+    printf("- %d palavras carregadas para o texto: \"%s\"\n", tamanho_arvore(texto_a), caminho_texto_a);
+    printf("- %d palavras carregadas para o texto: \"%s\"\n", tamanho_arvore(texto_b), caminho_texto_b);
 
     printf("- %d palavras em comum\n", palavras_em_comum);
 
-    int total_de_palavras = (contar_nodos(texto_base) + contar_nodos(texto_de_busca)) - palavras_em_comum;
+    int total_de_palavras = (tamanho_arvore(texto_a) + tamanho_arvore(texto_b)) - palavras_em_comum;
     printf("- %d total de palavras\n", total_de_palavras);
 
     printf("Indice de Jacard: %f\n", palavras_em_comum * 1.0 / total_de_palavras);

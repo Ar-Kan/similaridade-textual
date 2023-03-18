@@ -303,7 +303,7 @@ int teste_integriadade_da_arvore() {
     inserir(&raiz, "s");
     inserir(&raiz, "f");
 
-    int nodos = contar_nodos(raiz);
+    int nodos = tamanho_arvore(raiz);
     if (nodos != 12) {
         printf("Quantidade de nodos nao corresponde ao esperado\n");
         printf("recebido: %d\n", nodos);
