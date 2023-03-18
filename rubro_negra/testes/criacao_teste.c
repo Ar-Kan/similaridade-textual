@@ -128,6 +128,39 @@ int teste_contar_nodos() {
     return 0;
 }
 
+int teste_jump_search() {
+    Nodo *raiz = NULL;
+    inserir(&raiz, "r");
+    inserir(&raiz, "e");
+    inserir(&raiz, "d");
+    inserir(&raiz, "b");
+    inserir(&raiz, "l");
+    inserir(&raiz, "a");
+    inserir(&raiz, "c");
+    inserir(&raiz, "k");
+    inserir(&raiz, "t");
+    inserir(&raiz, "g");
+    inserir(&raiz, "s");
+    inserir(&raiz, "f");
+
+    int tamanho = contar_nodos(raiz);
+    NodoTeste t1 = {.palavra="a", .cor=NEGRO, .esquerda=NULL, .direita=NULL, .pai="b"};
+    if (compara_nodos(jump_search(raiz, "a", tamanho), &t1)) return 1;
+    NodoTeste t2 = {.palavra="t", .cor=RUBRO, .esquerda=NULL, .direita=NULL, .pai="s"};
+    if (compara_nodos(jump_search(raiz, "t", tamanho), &t2)) return 1;
+    NodoTeste t3 = {.palavra="c", .cor=RUBRO, .esquerda=NULL, .direita=NULL, .pai="d"};
+    if (compara_nodos(jump_search(raiz, "c", tamanho), &t3)) return 1;
+    NodoTeste t4 = {.palavra="e", .cor=NEGRO, .esquerda="b", .direita="l", .pai=NULL};
+    if (compara_nodos(jump_search(raiz, "e", tamanho), &t4)) return 1;
+    NodoTeste t5 = {.palavra="k", .cor=RUBRO, .esquerda=NULL, .direita=NULL, .pai="g"};
+    if (compara_nodos(jump_search(raiz, "k", tamanho), &t5)) return 1;
+    NodoTeste t6 = {.palavra="r", .cor=RUBRO, .esquerda=NULL, .direita=NULL, .pai="s"};
+    if (compara_nodos(jump_search(raiz, "r", tamanho), &t6)) return 1;
+    if (compara_nodos(jump_search(raiz, "z", tamanho), NULL)) return 1;
+
+    return 0;
+}
+
 int executa_testes_de_criacao() {
     printf("Testando \"criar nodo\"\n");
     if (teste_criar_nodo()) {
@@ -147,6 +180,11 @@ int executa_testes_de_criacao() {
     printf("Testando \"contar nodos\"\n");
     if (teste_contar_nodos()) {
         printf_vermelho("Teste de \"contar nodos\" terminou com erros");
+        return 1;
+    }
+    printf("Testando \"jump search\"\n");
+    if (teste_jump_search()) {
+        printf_vermelho("Teste de \"jump search\" terminou com erros");
         return 1;
     }
     printf("Testando \"nodo string\"\n");

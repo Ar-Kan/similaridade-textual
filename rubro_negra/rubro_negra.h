@@ -89,7 +89,7 @@ void balancear(Nodo **raiz, Nodo *nodo);
  */
 Nodo *pesquisar(Nodo *raiz, char *palavra);
 
-Nodo *jump_search_arvore(Nodo *raiz, char *palavra, int quantidade_de_nodos);
+Nodo *jump_search(Nodo *raiz, char *palavra, int quantidade_de_nodos);
 
 /**
  * Retorna a quantidade de nodos existentes na árvore
