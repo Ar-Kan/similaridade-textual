@@ -104,7 +104,7 @@ int contar_nodos(Nodo *raiz);
  *
  * @param [in] nodo Raiz da árvore
  */
-void print(Nodo *nodo);
+void imprimir_arvore(Nodo *nodo);
 
 /**
  * Cria uma representação em forma de string do tipo Nodo

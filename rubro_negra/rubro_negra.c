@@ -81,25 +81,25 @@ int contar_nodos(Nodo *raiz) {
 }
 
 /**
- * Função recursiva auxiliar, para fazer o print da árvore
+ * Função recursiva auxiliar, para fazer o imprimir_arvore da árvore
  * @param nodo Nodo atual
  * @param contador Contador da posição atual
  * @param posicao Se esquerda (E), direita (D) ou origem (O)
  */
-void _print(Nodo *nodo, const int contador, const char *posicao) {
+void imprimir_arvore_auxiliar(Nodo *nodo, const int contador, const char *posicao) {
     if (nodo) {
-        _print(DIREITA_DE(nodo), contador + 1, "D");
+        imprimir_arvore_auxiliar(DIREITA_DE(nodo), contador + 1, "D");
         printf("%*s", 8 * contador, "");
         if (posicao)
             printf("%s: ", posicao);
         printf("%s", PALAVRA_DE(nodo));
         printf(" (%s)\n", COR_DE(nodo) == RUBRO ? "r" : "n");
-        _print(ESQUERDA_DE(nodo), contador + 1, "E");
+        imprimir_arvore_auxiliar(ESQUERDA_DE(nodo), contador + 1, "E");
     }
 }
 
-void print(Nodo *nodo) {
-    _print(nodo, 0, "o");
+void imprimir_arvore(Nodo *nodo) {
+    imprimir_arvore_auxiliar(nodo, 0, "o");
 }
 
 char *nodo_str(Nodo *nodo) {

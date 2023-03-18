@@ -16,7 +16,7 @@
  * inserir(&raiz, "g");
  * inserir(&raiz, "b");
  * inserir(&raiz, "a");
- * print(raiz);
+ * imprimir_arvore(raiz);
  *
  * // estrutura esperada
  *          D: g (n)
@@ -61,7 +61,7 @@ int teste_troca_de_cores() {
  * inserir(&raiz, "e");
  * inserir(&raiz, "h");
  * inserir(&raiz, "i");
- * print(raiz);
+ * imprimir_arvore(raiz);
  *
  * // estrutura esperada
  *          D: i (r)
@@ -101,7 +101,7 @@ int teste_rotacao_simples_esquerda() {
  * inserir(&raiz, "e");
  * inserir(&raiz, "b");
  * inserir(&raiz, "a");
- * print(raiz);
+ * imprimir_arvore(raiz);
  *
  * // estrutura esperada
  *          D: e (r)
@@ -142,7 +142,7 @@ int teste_rotacao_simples_direita() {
  * inserir(&raiz, "a");
  * inserir(&raiz, "c");
  * inserir(&raiz, "d");
- * print(raiz);
+ * imprimir_arvore(raiz);
  *
  * // estrutura esperada:
  *                  D: e (r)
@@ -195,7 +195,7 @@ int teste_rotacao_dupla_esquerda() {
  * inserir(&raiz, "h");
  * inserir(&raiz, "j");
  * inserir(&raiz, "i");
- * print(raiz);
+ * imprimir_arvore(raiz);
  *
  * // estrutura esperada:
  *         D: q (n)

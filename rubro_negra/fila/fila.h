@@ -47,6 +47,8 @@ void imprimir_fila(Fila *fila);
  */
 int inserir_na_fila(Fila **fila, Nodo *nodo);
 
+int tamanho_da_fila(Fila *fila);
+
 /**
  * Remove o próximo item da fila, retornando o nodo passado como parâmetro
  * @param fila

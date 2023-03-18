@@ -37,7 +37,6 @@ Nodo *consultar_fila(Fila *fila) {
 
 }
 
-
 int inserir_na_fila(Fila **fila, Nodo *nodo) {
     if (!nodo) return 0;
 
@@ -58,6 +57,19 @@ int inserir_na_fila(Fila **fila, Nodo *nodo) {
     }
 }
 
+int tamanho_da_fila(Fila *fila) {
+    TipoFila *ptaux;
+    if (fila) {
+        int tamanho = 0;
+        if (PRIMEIRO_DE(fila)) {
+            for (ptaux = PRIMEIRO_DE(fila); ptaux != NULL; ptaux = ELO_DE(ptaux)) {
+                tamanho++;
+            }
+        }
+        return tamanho;
+    } else
+        return 0;
+}
 
 int remover_da_fila(Fila **fila, Nodo **nodo) {
     TipoFila *ptaux;
@@ -78,7 +90,6 @@ int remover_da_fila(Fila **fila, Nodo **nodo) {
     return 0;
 }
 
-
 void imprimir_fila(Fila *fila) {
     TipoFila *ptaux;
     if (fila) {
@@ -91,7 +102,6 @@ void imprimir_fila(Fila *fila) {
     } else
         puts("Fila vazia");
 }
-
 
 void destruir_fila(Fila **fila) {
     TipoFila *ptaux;

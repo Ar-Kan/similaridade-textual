@@ -25,7 +25,7 @@ int teste_criar_nodo() {
  * inserir(&raiz, "a");
  * inserir(&raiz, "b");
  * inserir(&raiz, "a");
- * print(raiz);
+ * imprimir_arvore(raiz);
  *
  * // estrutura esperada:
  *         D: b (r)
