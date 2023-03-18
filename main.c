@@ -31,6 +31,7 @@ int computa_jacard(char *caminho_texto_base, char *caminho_texto_de_busca, char 
             palavra = strlwr(strtok(NULL, separadores));
         }
     }
+    fclose(entrada_stream);
 
     // texto base
     if ((entrada_stream = fopen(caminho_texto_base, "r")) == NULL) {
@@ -48,6 +49,7 @@ int computa_jacard(char *caminho_texto_base, char *caminho_texto_de_busca, char 
             palavra = strlwr(strtok(NULL, separadores));
         }
     }
+    fclose(entrada_stream);
 
     // texto de busca
     if ((entrada_stream = fopen(caminho_texto_de_busca, "r")) == NULL) {
@@ -65,6 +67,7 @@ int computa_jacard(char *caminho_texto_base, char *caminho_texto_de_busca, char 
             palavra = strlwr(strtok(NULL, separadores));
         }
     }
+    fclose(entrada_stream);
 
     Fila *fila = listar_nodos(texto_de_busca);
     Nodo *proximo = NULL;
