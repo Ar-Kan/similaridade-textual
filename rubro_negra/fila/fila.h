@@ -8,7 +8,6 @@ typedef struct TipoFila {
     struct TipoFila *elo;
 } TipoFila;
 
-
 typedef struct Fila {
     struct TipoFila *primeiro;
     struct TipoFila *ultimo;
