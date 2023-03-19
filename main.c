@@ -7,16 +7,27 @@
 #include "rubro_negra/testes/rubro_negra_teste.h"
 #include "rubro_negra/fila_rubro_negra.h"
 
-/// Implementação de strlwr para executar o programa no Linux,
-/// uma vez que esta função não é uma função padrão do c
-char *strlwr(char *str) {
-    if (!str) return NULL;
-    unsigned char *p = (unsigned char *) str;
-    while (*p) {
-        *p = tolower((unsigned char) *p);
-        p++;
+/**
+ * Implementação da função strlwr
+ *
+ * @details Essa função foi inicialmente inserida para executar
+ * o programa no linux, uma fez que strlwr não é uma função padrão do c,
+ * estando presente no pacote MinGW.
+ * Acabou que este código é mais performático que o existente no gcc,
+ * reduzindo o tempo de execução do programa.
+ *
+ * @param string Char array que será convertido para minúsculo
+ * @return Retorna a palavra convertida para minúscula
+ */
+char *strlwr(char *string) {
+    if (!string) return NULL;
+    unsigned char *p_string = (unsigned char *) string;
+    while (*p_string) {
+        if (*p_string >= 'A' && *p_string <= 'Z')
+            *p_string = tolower((unsigned char) *p_string);
+        p_string++;
     }
-    return str;
+    return string;
 }
 
 float computa_jaccard(char *texto_a, char *texto_b, char *stopwords, float *tempo_de_execucao) {
