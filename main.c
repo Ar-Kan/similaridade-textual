@@ -1,10 +1,21 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include <ctype.h>
 
 #include "rubro_negra/rubro_negra.h"
 #include "rubro_negra/testes/rubro_negra_teste.h"
 #include "rubro_negra/fila_rubro_negra.h"
+
+char *strlwr(char *str) {
+    if (!str) return NULL;
+    unsigned char *p = (unsigned char *) str;
+    while (*p) {
+        *p = tolower((unsigned char) *p);
+        p++;
+    }
+    return str;
+}
 
 float computa_jaccard(char *texto_a, char *texto_b, char *stopwords, float *tempo_de_execucao) {
 
@@ -20,7 +31,7 @@ float computa_jaccard(char *texto_a, char *texto_b, char *stopwords, float *temp
     if ((entrada_stream = fopen(stopwords, "r")) == NULL) {
         perror(stopwords);
         printf("Erro ao abrir o arquivo: \"%s\"\n", stopwords);
-        return 1;
+        return 0;
     }
     Nodo *arvore_stops = NULL;
     while (fgets(linhas, 1000, entrada_stream)) {
@@ -36,7 +47,7 @@ float computa_jaccard(char *texto_a, char *texto_b, char *stopwords, float *temp
     if ((entrada_stream = fopen(texto_a, "r")) == NULL) {
         perror(texto_a);
         printf("Erro ao abrir o arquivo: \"%s\"\n", texto_a);
-        return 1;
+        return 0;
     }
     Nodo *arvore_a = NULL;
     while (fgets(linhas, 1000, entrada_stream)) {
@@ -54,7 +65,7 @@ float computa_jaccard(char *texto_a, char *texto_b, char *stopwords, float *temp
     if ((entrada_stream = fopen(texto_b, "r")) == NULL) {
         perror(texto_b);
         printf("Erro ao abrir o arquivo: \"%s\"\n", texto_b);
-        return 1;
+        return 0;
     }
     Nodo *arvore_b = NULL;
     while (fgets(linhas, 1000, entrada_stream)) {
