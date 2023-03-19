@@ -1,11 +1,18 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
-#include <ctype.h>
+#include <math.h>
 
 #include "rubro_negra/rubro_negra.h"
 #include "rubro_negra/testes/rubro_negra_teste.h"
 #include "rubro_negra/fila_rubro_negra.h"
+
+#define EXECUTA_MEDIA 1
+#define USA_MINGW 0
+
+#if !USA_MINGW
+
+#include <ctype.h>
 
 /**
  * Implementação da função strlwr
@@ -29,6 +36,8 @@ char *strlwr(char *string) {
     }
     return string;
 }
+
+#endif
 
 float computa_jaccard(char *texto_a, char *texto_b, char *stopwords, float *tempo_de_execucao) {
 
@@ -115,14 +124,14 @@ float computa_jaccard(char *texto_a, char *texto_b, char *stopwords, float *temp
     int total_de_palavras = (tamanho_arvore(arvore_a) + tamanho_arvore(arvore_b)) - palavras_em_comum;
     float jaccard = palavras_em_comum * 1.0 / total_de_palavras;
 
-#if 0
+#if !EXECUTA_MEDIA
     // Debug
     printf("- %d arvore_stops carregadas\n", tamanho_arvore(arvore_stops));
     printf("- %d palavras carregadas para o texto: \"%s\"\n", tamanho_arvore(arvore_a), texto_a);
     printf("- %d palavras carregadas para o texto: \"%s\"\n", tamanho_arvore(arvore_b), texto_b);
     printf("- %d palavras em comum\n", palavras_em_comum);
     printf("- %d total de palavras\n", total_de_palavras);
-    printf("Indice de Jacard: %f\n", palavras_em_comum * 1.0 / total_de_palavras);
+    printf("Indice de Jacard: %.2f\n", roundf(jaccard * 1000) / 1000);
     printf("Tempo: %.5f ms\n", *tempo_de_execucao);
 #endif
 
@@ -146,6 +155,8 @@ int main(int argc, char *argv[]) {
     float tempo_de_execucao = 0;
     float tempo_total = 0;
     float jaccard = computa_jaccard(argv[1], argv[2], argv[3], &tempo_de_execucao);
+
+#if EXECUTA_MEDIA
     tempo_total += tempo_de_execucao;
     (void) computa_jaccard(argv[1], argv[2], argv[3], &tempo_de_execucao);
     tempo_total += tempo_de_execucao;
@@ -164,7 +175,9 @@ int main(int argc, char *argv[]) {
     (void) computa_jaccard(argv[1], argv[2], argv[3], &tempo_de_execucao);
     tempo_total += tempo_de_execucao;
 
-    printf("Indice de Jacard: %f\n", jaccard);
+    printf("Indice de Jacard: %.2f\n", roundf(jaccard * 1000) / 1000);
     printf("Tempo medio de execucao: %.5f ms\n", tempo_total / 8.0);
+#endif
+
     return 0;
 }
