@@ -7,6 +7,8 @@
 #include "rubro_negra/testes/rubro_negra_teste.h"
 #include "rubro_negra/fila_rubro_negra.h"
 
+/// Implementação de strlwr para executar o programa no Linux,
+/// uma vez que esta função não é uma função padrão do c
 char *strlwr(char *str) {
     if (!str) return NULL;
     unsigned char *p = (unsigned char *) str;
@@ -31,7 +33,7 @@ float computa_jaccard(char *texto_a, char *texto_b, char *stopwords, float *temp
     if ((entrada_stream = fopen(stopwords, "r")) == NULL) {
         perror(stopwords);
         printf("Erro ao abrir o arquivo: \"%s\"\n", stopwords);
-        return 0;
+        exit(1);
     }
     Nodo *arvore_stops = NULL;
     while (fgets(linhas, 1000, entrada_stream)) {
@@ -47,7 +49,7 @@ float computa_jaccard(char *texto_a, char *texto_b, char *stopwords, float *temp
     if ((entrada_stream = fopen(texto_a, "r")) == NULL) {
         perror(texto_a);
         printf("Erro ao abrir o arquivo: \"%s\"\n", texto_a);
-        return 0;
+        exit(1);
     }
     Nodo *arvore_a = NULL;
     while (fgets(linhas, 1000, entrada_stream)) {
@@ -65,7 +67,7 @@ float computa_jaccard(char *texto_a, char *texto_b, char *stopwords, float *temp
     if ((entrada_stream = fopen(texto_b, "r")) == NULL) {
         perror(texto_b);
         printf("Erro ao abrir o arquivo: \"%s\"\n", texto_b);
-        return 0;
+        exit(1);
     }
     Nodo *arvore_b = NULL;
     while (fgets(linhas, 1000, entrada_stream)) {
@@ -100,6 +102,7 @@ float computa_jaccard(char *texto_a, char *texto_b, char *stopwords, float *temp
     float jaccard = palavras_em_comum * 1.0 / total_de_palavras;
 
 #if 0
+    // Debug
     printf("- %d arvore_stops carregadas\n", tamanho_arvore(arvore_stops));
     printf("- %d palavras carregadas para o texto: \"%s\"\n", tamanho_arvore(arvore_a), texto_a);
     printf("- %d palavras carregadas para o texto: \"%s\"\n", tamanho_arvore(arvore_b), texto_b);
