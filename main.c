@@ -82,15 +82,18 @@ float computa_jaccard(char *texto_a, char *texto_b, char *stopwords, float *temp
     fclose(entrada_stream);
 
     Fila *fila = NULL;
+    Nodo *arvore_pesquisa = NULL;
     if (tamanho_arvore(arvore_a) <= tamanho_arvore(arvore_b)) {
         fila = listar_nodos(arvore_a);
+        arvore_pesquisa = arvore_b;
     } else {
         fila = listar_nodos(arvore_b);
+        arvore_pesquisa = arvore_a;
     }
     int palavras_em_comum = 0;
     while (QUANTIDADE_DE_ELEMENTOS_DE(fila)) {
         Nodo *proximo_nodo = remover_da_fila(&fila);
-        if (pesquisar(arvore_a, PALAVRA_DE(proximo_nodo))) {
+        if (pesquisar(arvore_pesquisa, PALAVRA_DE(proximo_nodo))) {
             palavras_em_comum++;
         }
     }
