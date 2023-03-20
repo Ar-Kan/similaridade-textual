@@ -30,8 +30,7 @@ char *strlwr(char *string) {
     if (!string) return NULL;
     unsigned char *p_string = (unsigned char *) string;
     while (*p_string) {
-        if (*p_string >= 'A' && *p_string <= 'Z')
-            *p_string = tolower((unsigned char) *p_string);
+        *p_string = tolower((unsigned char) *p_string);
         p_string++;
     }
     return string;
