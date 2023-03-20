@@ -15,7 +15,7 @@
 #include <ctype.h>
 
 /**
- * Implementação da função strlwr
+ * @breaf Implementação da função strlwr
  *
  * @details Essa função foi inicialmente inserida para executar
  * o programa no linux, uma fez que strlwr não é uma função padrão do c,
@@ -30,8 +30,7 @@ char *strlwr(char *string) {
     if (!string) return NULL;
     unsigned char *p_string = (unsigned char *) string;
     while (*p_string) {
-        if (*p_string >= 'A' && *p_string <= 'Z')
-            *p_string = tolower((unsigned char) *p_string);
+        *p_string = tolower((unsigned char) *p_string);
         p_string++;
     }
     return string;
