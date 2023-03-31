@@ -3,16 +3,18 @@
 #ifndef RUBRO_NEGRA
 #define RUBRO_NEGRA
 
-/// Representação da cor vermelha
-#define RUBRO 0
-/// Representação da cor preta
-#define NEGRO 1
+enum COR {
+    /// Representação da cor vermelha
+    RUBRO = 0,
+    /// Representação da cor preta
+    NEGRO
+};
 
 /// Retorna verdadeiro se o pai é nulo, ou seja, é raiz
 #define EH_RAIZ(t) ((t)->pai == NULL ? 1 : 0)
-/// Retorna a subarvore esquerda
+/// Retorna a subárvore esquerda
 #define ESQUERDA_DE(t) ((t)->esquerda)
-/// Retorna a subarvore direita
+/// Retorna a subárvore direita
 #define DIREITA_DE(t) ((t)->direita)
 /// Retorna a cor do nodo
 #define COR_DE(t) ((t)->cor)
@@ -22,9 +24,9 @@
 /// Retorna verdadeiro se o nodo não é nulo ou é vermelho
 #define VERMELHO(t) (t == NULL ? 0 : (t)->cor == RUBRO)
 
-/// Retorna a subarvore esquerda se existir, nulo caso contrário
+/// Retorna a subárvore esquerda se existir, nulo caso contrário
 #define ESQUERDA_OU_NULL_DE(t) (t == NULL ? NULL : ESQUERDA_DE(t))
-/// Retorna a subarvore direita se existir, nulo caso contrário
+/// Retorna a subárvore direita se existir, nulo caso contrário
 #define DIREITA_OU_NULL_DE(t) (t == NULL ? NULL : DIREITA_DE(t))
 /// Retorna a palavra guardada no nodo, se o nodo existir, null caso contrário
 #define PALAVRA_OU_NULL_DE(t) (t == NULL ? NULL : PALAVRA_DE(t))
@@ -52,9 +54,9 @@ typedef struct Nodo {
     char *palavra;
     /// Cor do nodo
     int cor;
-    /// Subarvore esquerda
+    /// subárvore esquerda
     struct Nodo *esquerda;
-    /// Subarvore direita
+    /// subárvore direita
     struct Nodo *direita;
     /// Pai do nodo
     struct Nodo *pai;
@@ -77,7 +79,7 @@ void inserir(Nodo **raiz, char *palavra);
 /**
  * Realiza o balanceamento da árvore
  * @param [in,out] raiz Raiz da árvore
- * @param [in,out] nodo O nodo que é base na base da subarvore
+ * @param [in,out] nodo O nodo que é base na base da subárvore
  */
 void balancear(Nodo **raiz, Nodo *nodo);
 
@@ -91,7 +93,7 @@ Nodo *pesquisar(Nodo *raiz, char *palavra);
 
 /**
  * Retorna a quantidade de nodos existentes na árvore
- * @param raiz Raiz da árvore ou subarvore
+ * @param raiz Raiz da árvore ou subárvore
  * @return Quantidade de nodos
  */
 int tamanho_arvore(Nodo *raiz);

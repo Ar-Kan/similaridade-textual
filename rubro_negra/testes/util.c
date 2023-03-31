@@ -1,6 +1,5 @@
-#include <stdlib.h>
-#include <string.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "rubro_negra/rubro_negra.h"
 #include "util.h"

@@ -9,9 +9,9 @@ typedef struct NodoTeste {
     char *palavra;
     /// Cor esperada do nodo
     int cor;
-    /// Palavra esperada da subarvore esquerda
+    /// Palavra esperada da subárvore esquerda
     char *esquerda;
-    /// Palavra esperada da subarvore direita
+    /// Palavra esperada da subárvore direita
     char *direita;
     /// Palavra esperada do pai do nodo
     char *pai;

@@ -1,16 +1,17 @@
+#include <math.h>
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
-#include <math.h>
 
 #include "rubro_negra/rubro_negra.h"
-#include "rubro_negra/testes/rubro_negra_teste.h"
 #include "rubro_negra/fila_rubro_negra.h"
+#include "rubro_negra/testes/rubro_negra_teste.h"
 
 #define EXECUTA_MEDIA 1
 #define USA_MINGW 0
 
 #if !USA_MINGW
+// Implementação própria de 'strlwr'
 
 #include <ctype.h>
 
@@ -38,9 +39,11 @@ char *strlwr(char *string) {
 
 #endif
 
+#define MAX_COUNT 1000
+
 float computa_jaccard(char *texto_a, char *texto_b, char *stopwords, float *tempo_de_execucao) {
 
-    char *palavra, linhas[1000];
+    char *palavra, linhas[MAX_COUNT];
     char separadores[] = {" ,.&*%\?!;/-'@\"$#=><()][}{:\n\t"};
     FILE *entrada_stream;
 
@@ -49,29 +52,31 @@ float computa_jaccard(char *texto_a, char *texto_b, char *stopwords, float *temp
     start = clock();
 
     // Stopwords
-    if ((entrada_stream = fopen(stopwords, "r")) == NULL) {
+    entrada_stream = fopen(stopwords, "r");
+    if (!entrada_stream) {
         perror(stopwords);
         printf("Erro ao abrir o arquivo: \"%s\"\n", stopwords);
         exit(1);
     }
     Nodo *arvore_stops = NULL;
-    while (fgets(linhas, 1000, entrada_stream)) {
+    while (fgets(linhas, MAX_COUNT, entrada_stream)) {
         palavra = strlwr(strtok(linhas, separadores));
         while (palavra != NULL) {
             inserir(&arvore_stops, strlwr(palavra));
             palavra = strlwr(strtok(NULL, separadores));
         }
     }
-    fclose(entrada_stream);
+    (void) fclose(entrada_stream);
 
     // texto base
-    if ((entrada_stream = fopen(texto_a, "r")) == NULL) {
+    entrada_stream = fopen(texto_a, "r");
+    if (!entrada_stream) {
         perror(texto_a);
         printf("Erro ao abrir o arquivo: \"%s\"\n", texto_a);
         exit(1);
     }
     Nodo *arvore_a = NULL;
-    while (fgets(linhas, 1000, entrada_stream)) {
+    while (fgets(linhas, MAX_COUNT, entrada_stream)) {
         palavra = strlwr(strtok(linhas, separadores));
         while (palavra != NULL) {
             if (!pesquisar(arvore_stops, palavra)) {
@@ -80,16 +85,17 @@ float computa_jaccard(char *texto_a, char *texto_b, char *stopwords, float *temp
             palavra = strlwr(strtok(NULL, separadores));
         }
     }
-    fclose(entrada_stream);
+    (void) fclose(entrada_stream);
 
     // texto de busca
-    if ((entrada_stream = fopen(texto_b, "r")) == NULL) {
+    entrada_stream = fopen(texto_b, "r");
+    if (!entrada_stream) {
         perror(texto_b);
         printf("Erro ao abrir o arquivo: \"%s\"\n", texto_b);
         exit(1);
     }
     Nodo *arvore_b = NULL;
-    while (fgets(linhas, 1000, entrada_stream)) {
+    while (fgets(linhas, MAX_COUNT, entrada_stream)) {
         palavra = strlwr(strtok(linhas, separadores));
         while (palavra != NULL) {
             if (!pesquisar(arvore_stops, palavra)) {
@@ -98,7 +104,7 @@ float computa_jaccard(char *texto_a, char *texto_b, char *stopwords, float *temp
             palavra = strlwr(strtok(NULL, separadores));
         }
     }
-    fclose(entrada_stream);
+    (void) fclose(entrada_stream);
 
     Fila *fila = NULL;
     Nodo *arvore_pesquisa = NULL;

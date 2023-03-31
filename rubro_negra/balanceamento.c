@@ -256,7 +256,7 @@ void balancear(Nodo **raiz, Nodo *nodo) {
         /// Pai vermelho e tio vermelho: alterar cores
         alterar_cores(nodo);
         if (EH_RAIZ(AVO_DE(nodo))) return;
-        /// se o avô não é raiz, verificar se não se deve balancear a subarvore superior
+        /// se o avô não é raiz, verificar se não se deve balancear a subárvore superior
         balancear(raiz, AVO_DE(nodo));
         return;
     }

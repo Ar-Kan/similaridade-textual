@@ -1,12 +1,12 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdio.h>
 
 #include "rubro_negra.h"
 
 Nodo *criar(char *palavra) {
     Nodo *nodo = (Nodo *) malloc(sizeof(Nodo));
-    if (nodo == NULL) {
+    if (!nodo) {
         printf("Erro ao alocar novo nodo, memoria insuficiente.\n");
         return NULL;
     }
@@ -30,14 +30,14 @@ int inserir_auxiliar(Nodo **subarvore, Nodo **nodo) {
     int comparacao = strcmp(PALAVRA_DE(*nodo), PALAVRA_DE(*subarvore));
     if (comparacao == 0) return 0;
     if (comparacao < 0) {
-        if (ESQUERDA_DE(*subarvore) == NULL) {
+        if (!ESQUERDA_DE(*subarvore)) {
             PAI_DE(*nodo) = *subarvore;
             ESQUERDA_DE(*subarvore) = *nodo;
             return 1;
         }
         return inserir_auxiliar(&ESQUERDA_DE(*subarvore), nodo);
     } else {
-        if (DIREITA_DE(*subarvore) == NULL) {
+        if (!DIREITA_DE(*subarvore)) {
             PAI_DE(*nodo) = *subarvore;
             DIREITA_DE(*subarvore) = *nodo;
             return 1;
@@ -123,7 +123,7 @@ char *nodo_str_auxiliar(char *palavra, char *cor, char *esquerda, char *direita,
     strcat(retorno, "\", .cor=");
     strcat(retorno, cor);
     strcat(retorno, ", .esquerda=");
-    if (esquerda == NULL) {
+    if (!esquerda) {
         strcat(retorno, "NULL");
     } else {
         strcat(retorno, "\"");
@@ -131,7 +131,7 @@ char *nodo_str_auxiliar(char *palavra, char *cor, char *esquerda, char *direita,
         strcat(retorno, "\"");
     }
     strcat(retorno, ", .direita=");
-    if (direita == NULL) {
+    if (!direita) {
         strcat(retorno, "NULL");
     } else {
         strcat(retorno, "\"");
@@ -139,7 +139,7 @@ char *nodo_str_auxiliar(char *palavra, char *cor, char *esquerda, char *direita,
         strcat(retorno, "\"");
     }
     strcat(retorno, ", .pai=");
-    if (pai == NULL) {
+    if (!pai) {
         strcat(retorno, "NULL");
     } else {
         strcat(retorno, "\"");

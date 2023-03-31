@@ -1,9 +1,8 @@
-#include <stdlib.h>
 #include <stdio.h>
 
 #include "rubro_negra_teste.h"
-#include "util.h"
 #include "rubro_negra/fila_rubro_negra.h"
+#include "util.h"
 
 /**
                  D: d (r)
