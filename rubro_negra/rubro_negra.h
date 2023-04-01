@@ -3,7 +3,7 @@
 #ifndef RUBRO_NEGRA
 #define RUBRO_NEGRA
 
-enum COR {
+enum Cor {
     /// Representação da cor vermelha
     RUBRO = 0,
     /// Representação da cor preta
@@ -53,7 +53,7 @@ typedef struct Nodo {
     /// Palavra do nodo
     char *palavra;
     /// Cor do nodo
-    int cor;
+    enum Cor cor;
     /// subárvore esquerda
     struct Nodo *esquerda;
     /// subárvore direita
@@ -93,7 +93,7 @@ Nodo *pesquisar(Nodo *raiz, char *palavra);
 
 /**
  * Retorna a quantidade de nodos existentes na árvore
- * @param raiz Raiz da árvore ou subárvore
+ * @param [in] raiz Raiz da árvore ou subárvore
  * @return Quantidade de nodos
  */
 int tamanho_arvore(Nodo *raiz);

@@ -6,7 +6,7 @@
 
 /**
  * Gera uma fila de nodos na ordem crescente (caminhamento esquerdo central).
- * @param raiz Raiz da árvore
+ * @param [in] raiz Raiz da árvore
  * @return Retorna a fila de nodos
  */
 Fila *listar_nodos(Nodo *raiz);
