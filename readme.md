@@ -33,7 +33,7 @@ com complexidade $O(\log(n))$ para buscas. E, uma RB (Segundo Knebl
 
 $$ h \leq \log_2(n+12) $$
 
-com complexidade $ O(\log_2(n+12))$ para buscas.
+com complexidade $O(\log_2(n+12))$ para buscas.
 
 Por fim, com relação às árvores Splay, não fazem sentido no contexto
 do programa, as repetições de palavras são ignoradas, então não há
